@@ -1,0 +1,32 @@
+<language-addon>
+    <addon-name>openlayers</addon-name>
+  	<version>
+		<version-class>org.zkoss.openlayers.Version</version-class>
+		<version-uid>1.0.0-SNAPSHOT</version-uid>
+		<zk-version>6.1.0</zk-version><!-- or later -->
+	</version>
+    
+	<stylesheet href="~./js/openlayers/css/openlayers.css.dsp" type="text/css"/>
+	<javascript package="openlayers"/>
+	
+	<language-name>xul/html</language-name>
+	<component>
+		<component-name>olmaps</component-name> <!-- required -->
+		<component-class>org.zkoss.openlayers.OLMaps</component-class> <!-- required -->
+		<widget-class>openlayers.map.OLMaps</widget-class> <!-- required -->
+		<mold>
+			<mold-name>default</mold-name>
+			<mold-uri>mold/olmaps.js</mold-uri>
+		</mold>
+	</component>
+	<component>
+		<component-name>ollayer</component-name> <!-- required -->
+		<component-class>org.zkoss.openlayers.layer.OLLayer</component-class> <!-- required -->
+		<widget-class>openlayers.layer.OLLayer</widget-class> <!-- required -->
+	</component><!-- 
+	<component>
+		<component-name>olgooglev3</component-name> required
+		<component-class>org.zkoss.openlayers.layer.OLGoogleV3</component-class> required
+		<widget-class>openlayers.layer.OLGoogleV3</widget-class> required
+	</component> -->
+</language-addon>

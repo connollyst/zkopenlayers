@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="openlayers" language="xul/html" depends="zul">
+	<script>if(!window.OpenLayers){</script>
+	<script src="ext/Openlayers.js"/>
+	<script>window.OpenLayers = OpenLayers;}</script>
+	<function class="org.zkoss.openlayers.init.Wpds"
+		signature="java.lang.String outOLListJavaScript()"/>
+</package>

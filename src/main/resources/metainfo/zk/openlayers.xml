@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- openlayers.xml
+	Purpose:
+		
+	Description:
+		
+	History:
+		Tue, Jun 19, 2012 11:30:07 AM, Created by jumperchen
+
+Copyright (C) 2012 Potix Corporation. All Rights Reserved.
+-->
+
+<openlayers>
+	<layer vendor="Google" class="OpenLayers.Layer.Google">
+		<props name="type" type="eval"/>
+	</layer>
+	<layer vendor="Google.v3" class="OpenLayers.Layer.Google">
+		<props name="type" type="eval"/>
+	</layer>
+</openlayers>
