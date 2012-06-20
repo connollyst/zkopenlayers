@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<package name="openlayers.layer" language="xul/html" depends="openlayers">
-	<!-- <script src="OLLayer.js" /> 
-	<widget name="OLGoogle" />
-	<widget name="OLGoogleV3" />-->
-	<widget name="OLLayer" />
-</package>

@@ -3,6 +3,5 @@
 	<script>if(!window.OpenLayers){</script>
 	<script src="ext/Openlayers.js"/>
 	<script>window.OpenLayers = OpenLayers;}</script>
-	<function class="org.zkoss.openlayers.init.Wpds"
-		signature="java.lang.String outOLListJavaScript()"/>
+	<widget name="Openlayers"/>
 </package>
