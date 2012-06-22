@@ -1,0 +1,13 @@
+<zk>
+	<window title="Navigation Control Demo" border="normal"  vflex="1" hflex="1" 
+		apply="ctrl.NavigationControlComposer">
+		<vlayout vflex="1" hflex="1">
+		<hlayout>
+		Demonstrate Navigation Control features
+		<checkbox label="Turn on/off Wheel Zoom" id="ck"/>
+		:<label id="msg" value="Turn off"/>
+		</hlayout>
+		<openlayers id="olComp" vflex="1" hflex="1"/>
+		</vlayout>
+	</window>
+</zk>

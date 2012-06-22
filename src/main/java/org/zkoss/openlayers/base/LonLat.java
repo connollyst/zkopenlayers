@@ -33,6 +33,13 @@ public class LonLat extends OLWidget {
 		_lat = lat;
 	}
 	
+	public double getLon() {
+		return _lon;
+	}
+	public double getLat() {
+		return _lat;
+	}
+	
 	private void setBuffer(StringBuilder buffer) {
 		_buffer = buffer;
 	}
@@ -50,8 +57,8 @@ public class LonLat extends OLWidget {
 	}
 	@Override
 	public String toJSONString() {
-		return toJSONFun("new " + getNativeClass() + "(" + this._lon + ", " +
-				this._lat + ")" + (_buffer != null ? _buffer.toString() : ""));
+		return toJSONFun(getNativeClass(), this._lon,
+				this._lat, (_buffer != null ? _buffer.toString() : ""));
 	}
 
 	@Override

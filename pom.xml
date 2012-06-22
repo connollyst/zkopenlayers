@@ -31,6 +31,12 @@
 	</pluginRepositories>
 	<dependencies>
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkmax</artifactId>
 			<version>${zk.version}</version>

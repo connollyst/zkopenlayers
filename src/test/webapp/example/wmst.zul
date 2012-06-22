@@ -1,0 +1,16 @@
+<zk>
+	<window title="WMS Time Demo" border="normal"  vflex="1" hflex="1" 
+		apply="ctrl.WMSTComposer">
+		<vlayout vflex="1" hflex="1">
+		Shows the use of the layer WMS-T (time) layer 
+		<hlayout hflex="1">
+		<textbox id="year" value="2005"/>-
+		<textbox id="month" value="08"/>-
+		<textbox id="day" value="29"/>T
+		<textbox id="hour" value="13"/>:
+		<textbox id="minute" value="11"/>:00
+		</hlayout>
+		<openlayers id="olComp" vflex="1" hflex="1"/>
+		</vlayout>
+	</window>
+</zk>

@@ -1,0 +1,7 @@
+<?script src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2&amp;mkt=en-us"?>
+<zk>
+	<window title="Bing Demo" border="normal"  vflex="1" hflex="1" 
+		apply="ctrl.BingComposer">
+		<openlayers id="olComp" vflex="1" hflex="1"/>
+	</window>
+</zk>

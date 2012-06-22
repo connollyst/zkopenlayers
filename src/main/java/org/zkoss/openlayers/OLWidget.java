@@ -16,10 +16,12 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.openlayers;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.zkoss.json.JSONAware;
 import org.zkoss.json.JSONValue;
+import org.zkoss.openlayers.util.Helper;
 
 /**
  * @author jumperchen
@@ -43,7 +45,10 @@ public abstract class OLWidget implements JSONAware {
 	}
 	protected abstract String getNativeClass();
 	
-	/** package */ void setMap(Openlayers map) {
+	/**
+	 * Internal use only.
+	 */
+	public void setMap(Openlayers map) {
 		if (_map != map) {
 			if (_map != null) {
 				_map.removeOLWidget(this);
@@ -51,10 +56,42 @@ public abstract class OLWidget implements JSONAware {
 			_map = map;
 		}
 	}
-	protected static String toJSONFun(String codes) {
+	protected static String toJSONFun(String className, Object... arguments) {
 		StringBuilder sb = new StringBuilder(64);
-		sb.append("(function (){ return ").append(codes).append(";})()");
+		sb.append("(function (){ return new ").append(className)
+			.append('(');
+		if (arguments.length > 0) {
+			for (Object arg : arguments)
+				sb.append(JSONValue.toJSONString(arg)).append(',');
+			int len = sb.length();
+			sb.deleteCharAt(len - 1);
+		}
+		sb.append(");})()");
 		return sb.toString();
+	}
+	protected static String toJSONExecFun(String initfun, String method, Object... arguments) {
+		StringBuilder sb = new StringBuilder(64);
+		sb.append("(function (){ var _a = ").append(initfun)
+			.append("; _a['").append(method).append("'](");
+		if (arguments.length > 0) {
+			for (Object arg : arguments)
+				sb.append(JSONValue.toJSONString(arg)).append(',');
+			int len = sb.length();
+			sb.deleteCharAt(len - 1);
+		}
+		sb.append(");return _a;})()");
+		return sb.toString();	
+	}
+	protected static String toJSONExecFuns(String initfun, String method, Object[] arguments) {
+		StringBuilder sb = new StringBuilder(64);
+		sb.append("(function (){ var _a = ").append(initfun)
+			.append(';');
+		if (arguments.length > 0) {
+			for (Object arg : arguments)
+				sb.append(" _a['").append(method).append("'](").append(JSONValue.toJSONString(arg)).append(");");
+		}
+		sb.append("return _a;})()");
+		return sb.toString();	
 	}
 	protected static String toJSONMap(String... pairs) {
 		StringBuilder sb = new StringBuilder(64);
@@ -75,9 +112,20 @@ public abstract class OLWidget implements JSONAware {
 		}
 		return key + ":" + JSONValue.toJSONString(value);
 	}
-	protected static Map add(Map options, String key, Object val) {
-		options.put(key, val);
-		return options;
+	
+	/**
+	 * Merges the options with the new value and returns a new map. 
+	 */
+	@SuppressWarnings("unchecked")
+	protected static Map mergeMap(Map options, String key, Object val) {
+		if (options == null) {
+			return Helper.toMap(Helper.pair(key, val));
+		} else {
+			Map newOptions = new HashMap();
+			newOptions.putAll(options);
+			newOptions.put(key, val);
+			return newOptions;
+		}
 	}
 	protected static String pair(String key, Object value) {
 		return pair(key, value, true);

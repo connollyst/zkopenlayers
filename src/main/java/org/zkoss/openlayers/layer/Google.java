@@ -55,11 +55,4 @@ public class Google extends Layer {
 	protected String getNativeClass() {
 		return "OpenLayers.Layer.Google";
 	}
-
-	@Override
-	public String toJSONString() {
-		return toJSONMap(pair("id", getUuid()), pair("name", getName()),
-				pair("pkg", getNativeClass(), false),
-				pair("options", add(getOptions(), "uuid", getUuid())));
-	}
 }

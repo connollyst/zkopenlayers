@@ -1,4 +1,4 @@
-/* LayerSwitcher.java
+/* PanZoom.java
 
 {{IS_NOTE
 	Purpose:
@@ -6,34 +6,35 @@
 	Description:
 		
 	History:
-		Jun 20, 2012 10:32:38 AM , Created by jumperchen
+		Jun 21, 2012 6:52:12 PM , Created by jumperchen
 }}IS_NOTE
 
 Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 
 {{IS_RIGHT
 }}IS_RIGHT
-*/
+ */
 package org.zkoss.openlayers.control;
 
 import java.util.Map;
 
-import org.zkoss.json.JSONValue;
-
-
 /**
  * @author jumperchen
- *
+ * 
  */
-public class LayerSwitcher extends Control {
-	public LayerSwitcher() {
+public class PanZoom extends Control {
+
+	public PanZoom() {
 		super(null);
 	}
-	public LayerSwitcher(Map options) {
+
+	public PanZoom(Map options) {
 		super(options);
 	}
-	
+
+	@Override
 	protected String getNativeClass() {
-		return "OpenLayers.Control.LayerSwitcher";
+		return "OpenLayers.Control.PanZoom";
 	}
+
 }

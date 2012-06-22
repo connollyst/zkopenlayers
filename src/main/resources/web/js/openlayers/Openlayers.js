@@ -3,6 +3,7 @@
 	Purpose:
 		
 	Description:
+		The Openlayers version is 2.11 - http://openlayers.org/
 		
 	History:
 		Wed, Jun 20, 2012  9:59:38 AM, Created by jumperchen
@@ -25,34 +26,79 @@ openlayers.Openlayers = zk.$extends(zul.Widget, {
 	$define: {
 		layer: function () {
 			this._layers.push(this._layer);
-			if (this._map) {
-				var lay = this._layer;
-				this._map.addLayer(new lay.pkg(lay.name, lay.options));
-				
-				// redraw to avoid blank screen
-				if (this._map.baseLayer)
-					this._map.baseLayer.redraw();
+			if (this.map) {
+				this.map.addLayer(this._layer);
+				this.redrawLayer();
 			}
 		},
 		control: function () {
 			this._controls.push(this._control);
-			if (this._map) {
-				var ctrl = this._control;
-				this._map.addControl(new ctrl.pkg(ctrl.options));
-			}
+			if (this.map)
+				this.map.addControl(this._control);
 		},
 		center: function () {
-			if (this._map) {
-				this._map.setCenter.apply(this._map, this._center);
-				this._map.render(this.$n());
+			if (this.map) {
+				this.map.setCenter.apply(this.map, this._center);
+				this.map.render(this.$n());
 			}
 		},
 		baseLayer: function () {
-			if (this._map) {
-				var lay = this._map.getLayersBy("uuid", this._baseLayer.id);
-				this._map.setBaseLayer(lay);
+			if (this.map) {
+				var lay = this.map.getLayersBy("uuid", this._baseLayer.id);
+				this.map.setBaseLayer(lay);
 			}
+		},
+		removeControl: function () {
+			if (this.map) {
+				var ctrl = this.map.getControlsBy("uuid", this._removeControl.id);
+				this.map.removeControl(ctrl);
+			}
+		},
+		removeLayer: function () {
+			if (this.map) {
+				var lay = this.map.getLayersBy("uuid", this._removeLayer.id);
+				this.map.removeLayer(lay);
+			}
+		},
+		mapEval: function (data) {
+			if (this.map) {
+				this.map[data[0]].apply(this.map, data[1]);
+			}
+		},
+		clientUpdate: function (data) {
+			if (this.map) {
+				var olWidget = this.getOLWidget(data[0]);
+				if (olWidget)
+					olWidget[data[1]](data[2]);
+			}
+		},
+		options: function (options) {
+			if (this.map)
+				this.map.setOptions(options);
 		}
+	},
+	getOLWidget: function (uuid) {
+		if (this.map) {
+			var w = this.map.getLayersBy("uuid", uuid);
+			if (w.length)
+				return w[0];
+			w = this.map.getControlsBy("uuid", uuid);
+			if (w.length)
+				return w[0];
+		}
+		return null;
+	},
+	redrawLayer: function (timeout) {
+		// redraw to avoid blank screen
+		var self = this;
+		if (self.map && self.map.baseLayer)
+			if (timeout)
+				setTimeout(function () {
+					if (self.map && self.map.baseLayer)
+						self.map.baseLayer.redraw();
+				}, timeout);
+			else
+				self.map.baseLayer.redraw();
 	},
 	setLayers: function (layers) {
 		this._layers = layers;
@@ -61,43 +107,51 @@ openlayers.Openlayers = zk.$extends(zul.Widget, {
 		this._controls = controls;
 	},
 	bind_: function () {
-		this._map = new OpenLayers.Map(this.uuid, {theme: null});
+		this.$supers(openlayers.Openlayers,'bind_', arguments);
+		var options = this._options || {};
+		options.theme = null;
+		this.map = new OpenLayers.Map(this.uuid, options);
 		var layers, controls;
 		if (layers = this._layers) {
-			for (var i = 0, j = layers.length; i < j; i++) {
-				var lay = layers[i],
-					pkg = lay.pkg;
-				this._map.addLayer(new pkg(lay.name, lay.options));
-			}
+			this.map.addLayers(layers);
 		}
 		if (controls = this._controls) {
-			for (var i = 0, j = controls.length; i < j; i++) {
-				var ctrl = controls[i],
-					pkg = ctrl.pkg;
-				this._map.addControl(new pkg(ctrl.options));
-			}
+			this.map.addControls(controls);
 		}
 		if (layers && this._center) {
-			this._map.setCenter.apply(this._map, this._center);
-			//this._map.setCenter(this._center[0], this._center[1], this._center[2], this._center[3]);
+			this.map.setCenter.apply(this.map, this._center);
+			//this.map.setCenter(this._center[0], this._center[1], this._center[2], this._center[3]);
 		}
-//		if (layers.length) {
-//		this._map.setCenter(new OpenLayers.LonLat(10.2, 48.9).transform(
-//		        new OpenLayers.Projection("EPSG:4326"),
-//		        this._map.getProjectionObject()
-//		    ), 5);
-//		}
+		
+		/** 
+		 * Supported map event types:
+		 * movestart - triggered after the start of a drag, pan, or zoom
+	     * move - triggered after each drag, pan, or zoom
+	     * moveend - triggered after a drag, pan, or zoom completes
+	     * zoomend - triggered after a zoom completes
+	     * mouseover - triggered after mouseover the map
+	     * mouseout - triggered after mouseout the map
+	     * mousemove - triggered after mousemove the map
+	     * changebaselayer - triggered after the base layer changes
+	     */
+		this.map.events.on({
+			changebaselayer: this.proxy(this.onChangeBaseLayer)
+		});
 		zWatch.listen({onSize: this});
-			this.$supers(openlayers.Openlayers,'bind_', arguments);
 	},
 	onSize: function () {
-	    this._map.updateSize();
+	    this.map.updateSize();
+	    this.redrawLayer(200);
 	},
 	unbind_: function () {
 		zWatch.unlisten({onSize: this});
-		this._map.destroy();
-		this._map = this._controls = this._layers = null;
+		this.map.destroy();
+		this.map = this._controls = this._layers = null;
 		this.$supers(openlayers.Openlayers,'unbind_', arguments);
+	},
+	/// map events
+	onChangeBaseLayer: function (evt) {
+		this.fire('onChangeBaseLayer', evt.layer.uuid);
 	},
 	redraw: function (out) {
 		out.push('<div', this.domAttrs_(), '></div>');

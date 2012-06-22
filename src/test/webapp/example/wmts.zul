@@ -1,0 +1,6 @@
+<zk>
+	<window title="WMTS Demo" border="normal"  vflex="1" hflex="1" 
+		apply="ctrl.WMTSComposer">
+		<openlayers id="olComp" vflex="1" hflex="1"/>
+	</window>
+</zk>

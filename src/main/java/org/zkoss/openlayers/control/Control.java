@@ -32,5 +32,9 @@ public abstract class Control extends OLWidget {
 	protected Map getOptions() {
 		return _options;
 	}
-
+	
+	public String toJSONString() {
+		return toJSONFun(getNativeClass(),
+				mergeMap(getOptions(), "uuid", getUuid()));
+	}
 }

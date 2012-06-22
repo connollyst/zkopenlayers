@@ -21,14 +21,19 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import org.zkoss.openlayers.base.Bounds;
 import org.zkoss.openlayers.base.LonLat;
 import org.zkoss.openlayers.base.Projection;
 import org.zkoss.openlayers.control.Control;
 import org.zkoss.openlayers.layer.Layer;
+import org.zkoss.openlayers.ui.OLEvents;
+import org.zkoss.zk.au.out.AuSetAttribute;
 import org.zkoss.zk.ui.HtmlBasedComponent;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.event.Events;
 
 /**
+ * A ZK Openlayers component.
  * @author jumperchen
  *
  */
@@ -38,6 +43,11 @@ public class Openlayers extends HtmlBasedComponent {
 	private Map _options;
 	private Object[] _center;
 	private Layer _baseLayer;
+	
+	static {
+		addClientEvent(Openlayers.class, OLEvents.ON_CHANGEBASELAYER,CE_DUPLICATE_IGNORE
+				| CE_IMPORTANT);
+	}
 	public Openlayers() {
 		init();
 	}
@@ -52,7 +62,7 @@ public class Openlayers extends HtmlBasedComponent {
 		}
 	}
 	public Layer getLayer(String uuid) {
-		return null;
+		return _layers.get(uuid);
 	}
 	public void addLayer(Layer layer) {
 		if (layer == null)
@@ -114,6 +124,19 @@ public class Openlayers extends HtmlBasedComponent {
 			smartUpdate("control", control);
 		}
 	}
+	public void zoomToExtent(Bounds bounds, boolean closest) {
+		mapEval("zoomToExtent", bounds, closest);
+	}
+	public void zoomToMaxExtent() {
+		mapEval("zoomToMaxExtent");
+	}
+	private void mapEval(String fun, Object... args) {
+		response(new AuSetAttribute(this, "mapEval", new Object[]{fun, args}));
+	}
+
+	public void setCenter(LonLat lonlat, int zoom) {
+		setCenter(lonlat, zoom, false, false);
+	}
 	public void setCenter(LonLat lonlat, int zoom, boolean dragging, boolean forceZoomChage) {
 		Object[] center = new Object[]{lonlat, zoom, dragging, forceZoomChage};
 		if (!Arrays.equals(_center, center)) {
@@ -145,7 +168,17 @@ public class Openlayers extends HtmlBasedComponent {
 		if (!_controls.isEmpty())
 			renderer.render("controls", new LinkedList<Control>(_controls.values()));
 		render(renderer, "center", _center);
+		render(renderer, "options", _options);
 	}
-	
+	public void service(org.zkoss.zk.au.AuRequest request, boolean everError) {
+		final String cmd = request.getCommand();
+		if (cmd.equals(OLEvents.ON_CHANGEBASELAYER)) {
+			String layerId = (String)request.getData().get("");
+			Layer layer = _layers.get(layerId);
+			if (layer != null)
+				Events.postEvent(OLEvents.ON_CHANGEBASELAYER, this, layer);
+		} else
+			super.service(request, everError);
+	}
 	
 }

@@ -27,7 +27,7 @@ import org.zkoss.openlayers.base.Projection;
  */
 public abstract class Layer extends OLWidget {
 	private String _name;
-	private Map _options;
+	protected Map _options;
 	public Layer(String name, Map options) {
 		_name = name;
 		_options = options;
@@ -43,6 +43,11 @@ public abstract class Layer extends OLWidget {
 	}
 	public Projection getProjection() {
 		return null;
+	}
+
+	public String toJSONString() {
+		return toJSONFun(getNativeClass(), getName(),
+				mergeMap(getOptions(), "uuid", getUuid()));
 	}
 
 }
