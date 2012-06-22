@@ -16,13 +16,11 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.openlayers.base;
 
-import org.zkoss.openlayers.OLWidget;
-
 /**
  * @author jumperchen
  *
  */
-public class Icon extends OLWidget {
+public class Icon extends OLBase {
 	private String _url;
 	private Size _size;
 	private Pixel _offset;

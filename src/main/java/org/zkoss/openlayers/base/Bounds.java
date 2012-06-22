@@ -16,15 +16,14 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
  */
 package org.zkoss.openlayers.base;
 
-import org.zkoss.openlayers.OLWidget;
-
 /**
  * @author jumperchen
  * 
  */
-public class Bounds extends OLWidget {
+public class Bounds extends OLBase {
 
 	private double _left, _bottom, _right, _top;
+	private StringBuilder _buffer;
 
 	public Bounds(double left, double bottom, double right, double top) {
 		_left = left;
@@ -40,6 +39,14 @@ public class Bounds extends OLWidget {
 	public double getHeight() {
 		return _top - _bottom;
 	}
+
+	public Bounds transform(Projection source, Projection dest) {
+		if (_buffer == null)
+			_buffer = new StringBuilder(64);
+		_buffer.append(".transform(").append(source  != null ? source.toJSONString() : "null")
+		.append(',').append(dest != null ? dest.toJSONString() : "null").append(')');
+		return this;
+	}
 	
 	public Size getSize() {
 		return new Size(getWidth(), getHeight());
@@ -47,12 +54,12 @@ public class Bounds extends OLWidget {
 	
 	@Override
 	public String toJSONString() {
-		return toJSONFun(getNativeClass(), _left, _bottom, _right, _top);
+		return toJSONFun(getNativeClass(), _left, _bottom, _right, _top) + (_buffer != null ? _buffer.toString() : "");
 	}
 
 	@Override
 	protected String getNativeClass() {
 		return "OpenLayers.Bounds";
 	}
-
+	
 }

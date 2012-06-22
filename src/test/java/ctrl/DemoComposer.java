@@ -26,6 +26,7 @@ public class DemoComposer extends SelectorComposer<Borderlayout> {
 	@Wire
 	private Iframe xcontents;
 
+	@SuppressWarnings("unchecked")
 	public void doAfterCompose(Borderlayout comp) throws Exception {
 		super.doAfterCompose(comp);
 
@@ -45,29 +46,32 @@ public class DemoComposer extends SelectorComposer<Borderlayout> {
 			}
 		});
 
-		ListModel listmodel = new ListModelList(zuls);
-		ListitemRenderer render = new ListitemRenderer() {
-			public void render(Listitem item, final Object data, int index) {
+		ListModel<File> listmodel = new ListModelList<File>(zuls);
+		ListitemRenderer render = new ListitemRenderer<File>() {
+			public void render(Listitem item, final File data, int index) {
 				new Listcell(((File) data).getName()).setParent(item);
 				item.addEventListener("onClick",
 						new org.zkoss.zk.ui.event.EventListener() {
 							public void onEvent(Event event) throws Exception {
-								if ("google.zul".equals(((File) data).getName())
+								if ("google.zul".equals(data.getName())
 										&& (!"8080".equals(Executions
-												.getCurrent().getServerPort()) || !"localhost"
+												.getCurrent().getServerPort() + "") || !"localhost"
 												.equals(Executions.getCurrent()
 														.getServerName()))) {
 									Messagebox
 											.show("Please change your server to localhost:8080 for Google Map V2 version");
 								} else {
 									xcontents.setSrc("/example/"
-											+ ((File) data).getName());
+											+ data.getName());
 								}
 							}
 						});
 			}
 		};
-		((Selectable) listmodel).addToSelection(listmodel.getElementAt(0));
+		File first = listmodel.getElementAt(0);
+		((Selectable) listmodel).addToSelection(first);
+		xcontents.setSrc("/example/" + first.getName());
+
 		listdemo.setModel(listmodel);
 		listdemo.setItemRenderer(render);
 	}

@@ -39,8 +39,7 @@ public class WMTS extends Layer {
 		if (_options == null)
 			_options = new HashMap();
 		_options.putAll(params);
-		if (_map != null)
-			_map.clientUpdate(this, "mergeNewParams", params);
+		clientUpdate("mergeNewParams", params);
 	}
 	@Override
 	public String toJSONString() {

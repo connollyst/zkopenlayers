@@ -69,7 +69,7 @@ openlayers.Openlayers = zk.$extends(zul.Widget, {
 			if (this.map) {
 				var olWidget = this.getOLWidget(data[0]);
 				if (olWidget)
-					olWidget[data[1]](data[2]);
+					olWidget[data[1]].appley(olWidget, data[2]);
 			}
 		},
 		options: function (options) {
@@ -106,7 +106,7 @@ openlayers.Openlayers = zk.$extends(zul.Widget, {
 	setControls: function (controls) {
 		this._controls = controls;
 	},
-	bind_: function () {
+	bind_: function (desktop, skipper, after) {
 		this.$supers(openlayers.Openlayers,'bind_', arguments);
 		var options = this._options || {};
 		options.theme = null;
@@ -119,8 +119,11 @@ openlayers.Openlayers = zk.$extends(zul.Widget, {
 			this.map.addControls(controls);
 		}
 		if (layers && this._center) {
-			this.map.setCenter.apply(this.map, this._center);
-			//this.map.setCenter(this._center[0], this._center[1], this._center[2], this._center[3]);
+			var self = this;
+			after.push(function () {
+				if (self.map)
+					self.map.setCenter.apply(self.map, self._center);
+			});
 		}
 		
 		/** 

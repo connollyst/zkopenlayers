@@ -45,13 +45,13 @@ public class Markers extends Layer {
 		_markers.add(marker);
 		marker.setParent(this);
 		if (_map != null) {
-			marker.setMap(_map);
+			marker.onMapAttached(_map, null);
 			_map.invalidate();
 		}
 	}
 	public void removeMarker(Marker marker) {
 		if (_markers.remove(marker)) {
-			marker.setMap(null);
+			marker.onMapDetached(_map);
 			marker.setParent(null);
 			if (_map != null)
 				_map.invalidate();
@@ -69,11 +69,18 @@ public class Markers extends Layer {
 		return initFun;
 	}
 	@Override
-	public void setMap(Openlayers map) {
-		super.setMap(map);
+	public void onMapAttached(Openlayers newMap, Openlayers oldMap) {
+		super.onMapAttached(newMap, oldMap);
 		for (Marker m : _markers)
-			m.setMap(map);
+			m.onMapAttached(newMap, oldMap);
 	}
+	@Override
+	public void onMapDetached(Openlayers map) {
+		super.onMapDetached(map);
+		for (Marker m : _markers)
+			m.onMapDetached(map);
+	}
+	
 	@Override
 	protected String getNativeClass() {
 		return "OpenLayers.Layer.Markers";

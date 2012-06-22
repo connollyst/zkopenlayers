@@ -16,13 +16,11 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.openlayers.base;
 
-import org.zkoss.openlayers.OLWidget;
-
 /**
  * @author jumperchen
  *
  */
-public class LonLat extends OLWidget {
+public class LonLat extends OLBase {
 
 	private double _lon = 0.0;
 	private double _lat = 0.0;
@@ -40,10 +38,6 @@ public class LonLat extends OLWidget {
 		return _lat;
 	}
 	
-	private void setBuffer(StringBuilder buffer) {
-		_buffer = buffer;
-	}
-	
 	public LonLat add(double lon, double lat) {
 		return new LonLat(this._lon + lon, this._lat + lat); 
 	}
@@ -58,7 +52,7 @@ public class LonLat extends OLWidget {
 	@Override
 	public String toJSONString() {
 		return toJSONFun(getNativeClass(), this._lon,
-				this._lat, (_buffer != null ? _buffer.toString() : ""));
+				this._lat) + (_buffer != null ? _buffer.toString() : "");
 	}
 
 	@Override

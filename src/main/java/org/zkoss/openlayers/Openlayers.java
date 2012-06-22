@@ -17,8 +17,11 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 package org.zkoss.openlayers;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.zkoss.openlayers.base.Bounds;
@@ -63,6 +66,9 @@ public class Openlayers extends HtmlBasedComponent {
 	}
 	public Layer getLayer(String uuid) {
 		return _layers.get(uuid);
+	}
+	public Collection<Layer> getLayers() {
+		return Collections.unmodifiableCollection(_layers.values());
 	}
 	public void addLayer(Layer layer) {
 		if (layer == null)
@@ -115,7 +121,14 @@ public class Openlayers extends HtmlBasedComponent {
 		}
 	}
 	public Control getControl(String uuid) {
-		return null;
+		return _controls.get(uuid);
+	}
+	
+	/**
+	 * Returns a unmodifiable collection
+	 */
+	public Collection<Control> getControls() {
+		return Collections.unmodifiableCollection(_controls.values());
 	}
 	public void addControl(Control control) {
 		if (!_controls.containsKey(control.getUuid())) {
@@ -147,12 +160,23 @@ public class Openlayers extends HtmlBasedComponent {
 	public LonLat getCenter() {
 		return _center != null ? (LonLat)_center[0] : null;
 	}
-	public Projection getProjection() {
-		if (this._baseLayer != null)
-			return this._baseLayer.getProjection();
+	public Projection getDisplayProjection() {
+		if (_options != null)
+			return (Projection) _options.get("displayProjection");
 		return null;
 	}
-	public void clientUpdate(OLWidget widget, String attr, Object value) {
+	
+	public Projection getProjection() {
+		Projection proj = null;
+		if (this._baseLayer != null)
+			proj = this._baseLayer.getProjection();
+		if (proj != null)
+			return proj;
+		if (_options != null)
+			return (Projection) _options.get("projection");
+		return null;
+	}
+	public void clientUpdate(OLWidget widget, String attr, Object[] value) {
 		smartUpdate("clientUpdate", new Object[] {widget.getUuid(), attr, value});
 	}
 	// -- ComponentCtrl --//

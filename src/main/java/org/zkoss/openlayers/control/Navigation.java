@@ -31,13 +31,11 @@ public class Navigation extends Control {
 	}
 	
 	public void enableZoomWheel() {
-		if (_map != null)
-			_map.clientUpdate(this, "enableZoomWheel", null);
+		clientUpdate("enableZoomWheel");
 	}
 	
 	public void disableZoomWheel() {
-		if (_map != null)
-			_map.clientUpdate(this, "disableZoomWheel", null);		
+		clientUpdate("disableZoomWheel");		
 	}
 
 	@Override

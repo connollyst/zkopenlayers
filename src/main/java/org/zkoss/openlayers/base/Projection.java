@@ -16,13 +16,11 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.openlayers.base;
 
-import org.zkoss.openlayers.OLWidget;
-
 /**
  * @author jumperchen
  *
  */
-public class Projection extends OLWidget {
+public class Projection extends OLBase {
 
 	private String _projCode;
 	public Projection(String projCode) {
@@ -33,12 +31,8 @@ public class Projection extends OLWidget {
 		return "new " + getNativeClass() + "('" + this._projCode + "')";
 	}
 
-	/* (non-Javadoc)
-	 * @see org.zkoss.openlayers.OLWidget#getNativeClass()
-	 */
 	@Override
 	protected String getNativeClass() {
-		// TODO Auto-generated method stub
 		return "OpenLayers.Projection";
 	}
 

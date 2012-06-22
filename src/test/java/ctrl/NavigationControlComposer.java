@@ -19,6 +19,8 @@ package ctrl;
 import static org.zkoss.openlayers.util.Helper.pair;
 import static org.zkoss.openlayers.util.Helper.toMap;
 
+import java.util.Collections;
+
 import org.zkoss.openlayers.Openlayers;
 import org.zkoss.openlayers.control.Navigation;
 import org.zkoss.openlayers.layer.WMS;
@@ -47,6 +49,7 @@ public class NavigationControlComposer extends SelectorComposer<Window> {
 	private Navigation nav;
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
+		olComp.setOptions(toMap(pair("controls", Collections.EMPTY_LIST)));
 		olComp.addLayer(new WMS("OpenLayers WMS",
 				"http://vmap0.tiles.osgeo.org/wms/vmap0", toMap(pair("layers",
 						"basic"))));

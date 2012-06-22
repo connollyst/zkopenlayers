@@ -6,8 +6,7 @@
 				style="border: 0;" />
 		</west>
 		<center autoscroll="true">
-			<iframe style="padding:3px;" vflex="1" hflex="1"
-				src="/example/bing.zul" id="xcontents" />
+			<iframe style="padding:3px;" vflex="1" hflex="1" id="xcontents" />
 		</center>
 	</borderlayout>
 </zk>

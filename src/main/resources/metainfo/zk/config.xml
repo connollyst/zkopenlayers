@@ -19,8 +19,4 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 		<version-class>org.zkoss.openlayers.Version</version-class>
 		<version-uid>1.0.0-SNAPSHOT</version-uid>
 	</version>
-
-<!-- 	<listener>
-		<listener-class>org.zkoss.openlayers.init.WebAppInit</listener-class>
-	</listener> -->
 </config>

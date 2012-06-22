@@ -39,7 +39,7 @@ public abstract class Layer extends OLWidget {
 		return _name;
 	}
 	public void addOptions(Map options, boolean reinitialize) {
-		
+		clientUpdate("addOptions", new Object[] {options, reinitialize});
 	}
 	public Projection getProjection() {
 		return null;

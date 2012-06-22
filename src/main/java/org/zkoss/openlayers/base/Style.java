@@ -1,4 +1,4 @@
-/* Pixel.java
+/* Style.java
 
 {{IS_NOTE
 	Purpose:
@@ -6,7 +6,7 @@
 	Description:
 		
 	History:
-		Jun 21, 2012 5:19:02 PM , Created by jumperchen
+		Jun 22, 2012 5:37:31 PM , Created by jumperchen
 }}IS_NOTE
 
 Copyright (C) 2012 Potix Corporation. All Rights Reserved.
@@ -16,30 +16,27 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.openlayers.base;
 
+import java.util.Map;
+
 /**
  * @author jumperchen
  *
  */
-public class Pixel extends OLBase {
-	private double _x, _y;
-	public Pixel(double x, double y) {
-		_x = x;
-		_y = y;
-	}
-	public double getX() {
-		return _x;
-	}
-	public double getY() {
-		return _y;
+public class Style extends OLBase {
+	private Map _style;
+	private Map _options;
+	public Style(Map style, Map options) {
+		_style = style;
+		_options = options;
 	}
 	@Override
 	public String toJSONString() {
-		return toJSONFun(getNativeClass(), _x, _y);
+		return toJSONFun(getNativeClass(), _style, _options);
 	}
 
 	@Override
 	protected String getNativeClass() {
-		return "OpenLayers.Pixel";
+		return "OpenLayers.Style";
 	}
 
 }
