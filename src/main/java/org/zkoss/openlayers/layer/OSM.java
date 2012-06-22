@@ -22,21 +22,19 @@ import java.util.Map;
  * @author jumperchen
  *
  */
-public class OSM extends Layer {
-	private String _url;
+public class OSM extends XYZ {
 	public OSM() {
 		this(null, null, null);
 	}
+	public OSM(String name) {
+		this(name, null, null);
+	}
 	public OSM(String name, String url, Map options) {
-		super(name, options);
-		_url = url;
+		super(name, url, options);
 	}
 
-	public String getURL() {
-		return _url;
-	}
 	public OSM(Map options) {
-		super(null, options);
+		this(null, null, options);
 	}
 
 	public String toJSONString() {
