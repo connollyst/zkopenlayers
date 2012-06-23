@@ -20,7 +20,9 @@ import java.util.Map;
 
 import org.zkoss.openlayers.OLWidget;
 import org.zkoss.openlayers.base.Projection;
-
+import org.zkoss.openlayers.util.Function;
+import static org.zkoss.openlayers.util.Helper.mergeMap;
+import static org.zkoss.openlayers.util.Helper.pair;
 /**
  * @author jumperchen
  *
@@ -45,9 +47,9 @@ public abstract class Layer extends OLWidget {
 		return null;
 	}
 
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(), getName(),
-				mergeMap(getOptions(), "uuid", getUuid()));
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), getName(), mergeMap(getOptions(), pair("uuid",
+				getUuid())));
 	}
 
 }

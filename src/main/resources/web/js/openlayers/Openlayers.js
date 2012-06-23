@@ -69,7 +69,7 @@ openlayers.Openlayers = zk.$extends(zul.Widget, {
 			if (this.map) {
 				var olWidget = this.getOLWidget(data[0]);
 				if (olWidget)
-					olWidget[data[1]].appley(olWidget, data[2]);
+					olWidget[data[1]].apply(olWidget, data[2]);
 			}
 		},
 		options: function (options) {

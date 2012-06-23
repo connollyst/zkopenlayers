@@ -19,6 +19,7 @@ package org.zkoss.openlayers.protocol;
 import java.util.Map;
 
 import org.zkoss.openlayers.OLWidget;
+import org.zkoss.openlayers.util.Function;
 
 /**
  * @author jumperchen
@@ -29,14 +30,14 @@ public class WFS extends OLWidget {
 	public WFS(Map options) {
 		_options = options;
 	}
-	@Override
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(), _options);
-	}
-
+	
 	@Override
 	protected String getNativeClass() {
 		return "OpenLayers.Protocol.WFS";
+	}
+	@Override
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), _options);
 	}
 
 }

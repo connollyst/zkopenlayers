@@ -16,6 +16,8 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.openlayers.base;
 
+import org.zkoss.openlayers.util.Function;
+
 /**
  * @author jumperchen
  *
@@ -27,8 +29,8 @@ public class Projection extends OLBase {
 		_projCode = projCode;
 	}
 	@Override
-	public String toJSONString() {
-		return "new " + getNativeClass() + "('" + this._projCode + "')";
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), this._projCode);
 	}
 
 	@Override

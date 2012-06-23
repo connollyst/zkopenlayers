@@ -19,7 +19,6 @@ package org.zkoss.openlayers.layer;
 import java.util.Map;
 
 import org.zkoss.json.JSONAware;
-import org.zkoss.json.JSONValue;
 
 /**
  * @author jumperchen
@@ -48,7 +47,6 @@ public class Google extends Layer {
 	}
 	public Google(String name, Map options) {
 		super(name, options);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

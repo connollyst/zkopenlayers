@@ -21,6 +21,7 @@ import org.zkoss.openlayers.Openlayers;
 import org.zkoss.openlayers.base.Icon;
 import org.zkoss.openlayers.base.LonLat;
 import org.zkoss.openlayers.layer.Markers;
+import org.zkoss.openlayers.util.Function;
 
 /**
  * @author jumperchen
@@ -33,24 +34,18 @@ public class Marker extends OLWidget {
 
 	private Markers _parent;
 
-	private Double _opacity;
-
 	public Marker(LonLat lonlat, Icon icon) {
 		_lonlat = lonlat;
 		_icon = icon;
 	}
 
 	@Override
-	public String toJSONString() {
-		String initFun = toJSONFun(getNativeClass(), _lonlat, _icon);
-		if (_opacity != null) {
-			return toJSONExecFun(initFun, "setOpacity", _opacity);
-		}
-		return initFun;
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), _lonlat, _icon);
 	}
-
+	
 	public void setOpacity(double opacity) {
-		_opacity = opacity;
+		getNativeObject().invoke("setOpacity", opacity);
 	}
 
 	@Override

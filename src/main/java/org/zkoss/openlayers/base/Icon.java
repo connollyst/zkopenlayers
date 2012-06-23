@@ -16,6 +16,8 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.openlayers.base;
 
+import org.zkoss.openlayers.util.Function;
+
 /**
  * @author jumperchen
  *
@@ -24,7 +26,6 @@ public class Icon extends OLBase {
 	private String _url;
 	private Size _size;
 	private Pixel _offset;
-	private Double _opacity;
 	public Icon(String url, Size size, Pixel offset) {
 		_url = url;
 		_size = size;
@@ -36,18 +37,17 @@ public class Icon extends OLBase {
 	public Icon clone() {
 		return new Icon(_url, _size, _offset);
 	}
-	public String toJSONString() {
-		String initFun = toJSONFun(getNativeClass(), _url, _size, _offset);
-		if (_opacity != null) {
-			return toJSONExecFun(initFun, "setOpacity", _opacity);
-		}
-		return initFun;
-	}
 	
 	public void setOpacity(double opacity) {
-		_opacity = opacity;
+		getNativeObject().invoke("setOpacity", opacity);
     }
 
+
+	@Override
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), _url, _size, _offset);
+	}
+	
 	@Override
 	protected String getNativeClass() {
 		return "OpenLayers.Icon";

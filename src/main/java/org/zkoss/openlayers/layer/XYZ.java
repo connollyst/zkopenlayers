@@ -19,6 +19,9 @@ package org.zkoss.openlayers.layer;
 import java.util.Map;
 
 import org.zkoss.openlayers.base.Projection;
+import org.zkoss.openlayers.util.Function;
+import static org.zkoss.openlayers.util.Helper.mergeMap;
+import static org.zkoss.openlayers.util.Helper.pair;
 
 /**
  * @author jumperchen
@@ -47,9 +50,9 @@ public class XYZ extends Layer {
 	}
 
 	@Override
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(), getName(), getURL(),
-				mergeMap(getOptions(), "uuid", getUuid()));
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), getName(), getURL(),
+				mergeMap(getOptions(), pair("uuid", getUuid())));
 	}
 
 }

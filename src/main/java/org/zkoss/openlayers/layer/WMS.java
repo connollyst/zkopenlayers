@@ -19,6 +19,7 @@ package org.zkoss.openlayers.layer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.zkoss.openlayers.util.Function;
 import org.zkoss.openlayers.util.Helper;
 
 /**
@@ -47,8 +48,8 @@ public class WMS extends Layer {
 		clientUpdate("mergeNewParams", params);
 	}
 	@Override
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(), getName(), getURL(),
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), getName(), getURL(),
 				getOptions(), Helper.toMap(Helper.pair("uuid", getUuid())));
 	}
 }

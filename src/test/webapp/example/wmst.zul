@@ -8,7 +8,7 @@
 		<textbox id="month" value="08"/>-
 		<textbox id="day" value="29"/>T
 		<textbox id="hour" value="13"/>:
-		<textbox id="minute" value="11"/>:00
+		<textbox id="minute" value="00"/>:00
 		</hlayout>
 		<openlayers id="olComp" vflex="1" hflex="1"/>
 		</vlayout>

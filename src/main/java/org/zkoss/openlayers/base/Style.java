@@ -18,6 +18,8 @@ package org.zkoss.openlayers.base;
 
 import java.util.Map;
 
+import org.zkoss.openlayers.util.Function;
+
 /**
  * @author jumperchen
  *
@@ -30,8 +32,8 @@ public class Style extends OLBase {
 		_options = options;
 	}
 	@Override
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(), _style, _options);
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), _style, _options);
 	}
 
 	@Override

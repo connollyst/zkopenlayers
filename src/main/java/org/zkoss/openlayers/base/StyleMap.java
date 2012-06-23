@@ -19,6 +19,7 @@ package org.zkoss.openlayers.base;
 import java.util.Map;
 
 import org.zkoss.json.JSONValue;
+import org.zkoss.openlayers.util.Function;
 
 /**
  * @author jumperchen
@@ -28,8 +29,6 @@ public class StyleMap extends OLBase {
 	private Style _style;
 
 	private Map _options;
-
-	private StringBuilder _buffer;
 
 	public StyleMap(Map options) {
 		this(null, options);
@@ -42,26 +41,13 @@ public class StyleMap extends OLBase {
 
 	public void addUniqueValueRules(String renderIntent, String property,
 			Map symbolizers, Map context) {
-		if (_buffer == null)
-			_buffer = new StringBuilder(64);
-		_buffer.append(".addUniqueValueRules(\'")
-				.append(renderIntent)
-				.append("\',\'")
-				.append(property)
-				.append("\',")
-				.append(symbolizers != null ? JSONValue
-						.toJSONString(symbolizers) : "null")
-				.append(',')
-				.append(context != null ? JSONValue.toJSONString(context)
-						: "null").append(')');
+		getNativeObject().invoke("addUniqueValueRules", renderIntent, property,
+				symbolizers, context);
 	}
 
 	@Override
-	public String toJSONString() {
-		final String initFun = toJSONFun(getNativeClass(), _style, _options);
-		if (_buffer != null)
-			return toJSONExecFunWithContent(initFun, _buffer.toString());
-		return initFun;
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), _style, _options);
 	}
 
 	@Override

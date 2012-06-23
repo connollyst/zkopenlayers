@@ -16,6 +16,8 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
  */
 package org.zkoss.openlayers.base;
 
+import org.zkoss.openlayers.util.Function;
+
 /**
  * @author jumperchen
  * 
@@ -35,8 +37,8 @@ public class Size extends OLBase {
 		return _height;
 	}
 	@Override
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(), _width, _height);
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), _width, _height);
 	}
 
 	@Override

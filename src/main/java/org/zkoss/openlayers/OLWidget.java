@@ -16,12 +16,8 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
  */
 package org.zkoss.openlayers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.zkoss.json.JSONAware;
-import org.zkoss.json.JSONValue;
-import org.zkoss.openlayers.util.Helper;
+import org.zkoss.openlayers.util.Function;
 
 /**
  * @author jumperchen
@@ -31,32 +27,85 @@ public abstract class OLWidget implements JSONAware {
 	protected Openlayers _map;
 
 	private String _uuid;
+	private Function _native;
 
 	private static final String ANONYMOUS_ID = "z__ol";
 
-	private static int _anonymousId;
+	private static volatile int _anonymousId;
 
-	private Map<String, Object[]> _attrQueue;
-
-	protected void clientUpdate(String attr, Object... value) {
+	protected void clientUpdate(String attr, Object... args) {
 		if (_map != null)
-			_map.clientUpdate(this, attr, value);
+			_map.clientUpdate(this, attr, args);
 		else {
-			if (_attrQueue == null)
-				_attrQueue = new HashMap<String, Object[]>();
-			_attrQueue.put(attr, value);
+			switch (args.length) {
+			case 0:
+				getNativeObject().invoke(attr);
+				break;
+			case 1:
+				getNativeObject().invoke(attr, args[0]);
+				break;
+			case 2:
+				getNativeObject().invoke(attr, args[0], args[1]);
+				break;
+			case 3:
+				getNativeObject().invoke(attr, args[0], args[1], args[2]);
+				break;
+			case 4:
+				getNativeObject().invoke(attr, args[0], args[1], args[2],
+						args[3]);
+				break;
+			case 5:
+				getNativeObject().invoke(attr, args[0], args[1], args[2],
+						args[3], args[4]);
+				break;
+			case 6:
+				getNativeObject().invoke(attr, args[0], args[1], args[2],
+						args[3], args[4], args[5]);
+				break;
+			case 7:
+				getNativeObject().invoke(attr, args[0], args[1], args[2],
+						args[3], args[4], args[5], args[6]);
+				break;
+			case 8:
+				getNativeObject().invoke(attr, args[0], args[1], args[2],
+						args[3], args[4], args[5], args[6], args[7]);
+				break;
+			}
 		}
 	}
 
 	public String getUuid() {
 		if (_uuid == null) {
-			_uuid = ANONYMOUS_ID + _anonymousId++;
+			_uuid = getNextUuid();
 		}
 		return _uuid;
 	}
-
+	
+	protected String getNextUuid() {
+		String uuid = ANONYMOUS_ID + _anonymousId++;
+		if (_anonymousId == Integer.MAX_VALUE) {
+			_anonymousId = 0;
+		}
+		return uuid;
+	}
+	
 	protected abstract String getNativeClass();
+	
+	/**
+	 * Returns the native Javascript Object, which is according with this OLWidget.
+	 * <p>Note: it will return the same native object when invoked multi-times.
+	 */
+	protected Function getNativeObject() {
+		if (_native == null)
+			_native = newNativeObject();
+		return _native;
+	}
 
+	protected abstract Function newNativeObject();
+	
+	public String toJSONString() {
+		return getNativeObject().toJSONString();
+	}
 	/**
 	 * Internal use only.
 	 */
@@ -78,14 +127,9 @@ public abstract class OLWidget implements JSONAware {
 	/**
 	 * A call back method after map attached.
 	 * <p>
-	 * Subclass must invoke super.onMapAttached() to flush the client's update
-	 * queue.
+	 * Default: does nothing.
 	 */
 	public void onMapAttached(Openlayers newMap, Openlayers oldMap) {
-		if (_attrQueue != null) {
-			for (String key : _attrQueue.keySet())
-				_map.clientUpdate(this, key, _attrQueue.remove(key));
-		}
 	}
 
 	/**
@@ -95,66 +139,7 @@ public abstract class OLWidget implements JSONAware {
 	 */
 	public void onMapDetached(Openlayers map) {
 	}
-
-	protected static String toJSONFun(String className, Object... arguments) {
-		StringBuilder sb = new StringBuilder(64);
-		sb.append("(function (){ return new ").append(className).append('(');
-		if (arguments.length > 0) {
-			for (Object arg : arguments)
-				sb.append(JSONValue.toJSONString(arg)).append(',');
-			int len = sb.length();
-			sb.deleteCharAt(len - 1);
-		}
-		sb.append(");})()");
-		return sb.toString();
-	}
-	protected static String toJSONExecFunWithContent(String initfun, String content) {
-		StringBuilder sb = new StringBuilder(64);
-		sb.append("(function (){ var _a = ").append(initfun).append("; _a")
-				.append(content).append(";return _a;})()");
-		return sb.toString();
-	}
-	protected static String toJSONExecFun(String initfun, String method,
-			Object... arguments) {
-		StringBuilder sb = new StringBuilder(64);
-		sb.append("(function (){ var _a = ").append(initfun).append("; _a['")
-				.append(method).append("'](");
-		if (arguments.length > 0) {
-			for (Object arg : arguments)
-				sb.append(JSONValue.toJSONString(arg)).append(',');
-			int len = sb.length();
-			sb.deleteCharAt(len - 1);
-		}
-		sb.append(");return _a;})()");
-		return sb.toString();
-	}
-
-	protected static String toJSONExecFuns(String initfun, String method,
-			Object[] arguments) {
-		StringBuilder sb = new StringBuilder(64);
-		sb.append("(function (){ var _a = ").append(initfun).append(';');
-		if (arguments.length > 0) {
-			for (Object arg : arguments)
-				sb.append(" _a['").append(method).append("'](")
-						.append(JSONValue.toJSONString(arg)).append(");");
-		}
-		sb.append("return _a;})()");
-		return sb.toString();
-	}
-	/**
-	 * Merges the options with the new value and returns a new map.
-	 */
-	@SuppressWarnings("unchecked")
-	protected static Map mergeMap(Map options, String key, Object val) {
-		if (options == null) {
-			return Helper.toMap(Helper.pair(key, val));
-		} else {
-			Map newOptions = new HashMap();
-			newOptions.putAll(options);
-			newOptions.put(key, val);
-			return newOptions;
-		}
-	}
+	
 	@Override
 	public String toString() {
 		return toJSONString();

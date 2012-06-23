@@ -13,23 +13,26 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 
 {{IS_RIGHT
 }}IS_RIGHT
-*/
+ */
 package org.zkoss.openlayers.layer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.zkoss.openlayers.util.Helper;
+import org.zkoss.openlayers.util.Function;
+import static org.zkoss.openlayers.util.Helper.mergeMap;
+import static org.zkoss.openlayers.util.Helper.pair;
 
 /**
  * @author jumperchen
- *
+ * 
  */
 public class WMTS extends Layer {
-	
+
 	public WMTS(Map options) {
 		super(null, options);
 	}
+
 	@Override
 	protected String getNativeClass() {
 		return "OpenLayers.Layer.WMTS";
@@ -41,9 +44,10 @@ public class WMTS extends Layer {
 		_options.putAll(params);
 		clientUpdate("mergeNewParams", params);
 	}
+
 	@Override
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(),
-				mergeMap(getOptions(), "uuid", getUuid()));
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), mergeMap(getOptions(),
+				pair("uuid", getUuid())));
 	}
 }

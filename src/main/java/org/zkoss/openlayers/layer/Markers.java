@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.zkoss.openlayers.Openlayers;
 import org.zkoss.openlayers.marker.Marker;
+import org.zkoss.openlayers.util.Function;
 
 /**
  * @author jumperchen
@@ -63,10 +64,12 @@ public class Markers extends Layer {
 	}
 	@Override
 	public String toJSONString() {
-		String initFun = super.toJSONString();
-		if (!_markers.isEmpty())
-			return toJSONExecFuns(initFun, "addMarker", _markers.toArray(new Marker[0]));
-		return initFun;
+		Function fun = getNativeObject();
+		if (!_markers.isEmpty()) {
+			for (Marker m : _markers)
+				fun.invoke("addMarker", m);
+		}
+		return fun.toJSONString();
 	}
 	@Override
 	public void onMapAttached(Openlayers newMap, Openlayers oldMap) {

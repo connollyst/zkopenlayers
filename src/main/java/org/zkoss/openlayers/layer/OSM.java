@@ -18,6 +18,10 @@ package org.zkoss.openlayers.layer;
 
 import java.util.Map;
 
+import org.zkoss.openlayers.util.Function;
+import static org.zkoss.openlayers.util.Helper.mergeMap;
+import static org.zkoss.openlayers.util.Helper.pair;
+
 /**
  * @author jumperchen
  *
@@ -37,10 +41,12 @@ public class OSM extends XYZ {
 		this(null, null, options);
 	}
 
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(),
+	
+	@Override
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(),
 				getName(), getURL(),
-				mergeMap(getOptions(), "uuid", getUuid()));
+				mergeMap(getOptions(), pair("uuid", getUuid())));
 	}
 
 	@Override

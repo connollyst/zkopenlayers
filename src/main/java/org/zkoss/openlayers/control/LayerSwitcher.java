@@ -18,8 +18,6 @@ package org.zkoss.openlayers.control;
 
 import java.util.Map;
 
-import org.zkoss.json.JSONValue;
-
 
 /**
  * @author jumperchen

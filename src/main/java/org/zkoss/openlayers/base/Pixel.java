@@ -16,6 +16,8 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.openlayers.base;
 
+import org.zkoss.openlayers.util.Function;
+
 /**
  * @author jumperchen
  *
@@ -33,8 +35,8 @@ public class Pixel extends OLBase {
 		return _y;
 	}
 	@Override
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(), _x, _y);
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), _x, _y);
 	}
 
 	@Override

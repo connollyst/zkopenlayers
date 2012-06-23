@@ -55,7 +55,6 @@ public class VirtualEarth extends Layer {
 
 	@Override
 	protected String getNativeClass() {
-		// TODO Auto-generated method stub
 		return "OpenLayers.Layer.VirtualEarth";
 	}
 

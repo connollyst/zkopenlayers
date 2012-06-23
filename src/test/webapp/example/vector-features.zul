@@ -1,0 +1,7 @@
+<?script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjpkAC9ePGem0lIq5XcMiuhR_wWLPFku8Ix9i2SXYRVK3e45q1BQUd_beF8dtzKET_EteAjPdGDwqpQ"?>
+<zk>
+	<window title="Vector Features Demo" border="normal"  vflex="1" hflex="1" 
+		apply="ctrl.VectorFeaturesComposer">
+		<openlayers id="olComp" vflex="1" hflex="1"/>
+	</window>
+</zk>

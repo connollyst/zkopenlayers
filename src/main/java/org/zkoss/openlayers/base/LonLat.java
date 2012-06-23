@@ -16,6 +16,8 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.openlayers.base;
 
+import org.zkoss.openlayers.util.Function;
+
 /**
  * @author jumperchen
  *
@@ -43,22 +45,19 @@ public class LonLat extends OLBase {
 	}
 
 	public LonLat transform(Projection source, Projection dest) {
-		if (_buffer == null)
-			_buffer = new StringBuilder(64);
-		_buffer.append(".transform(").append(source  != null ? source.toJSONString() : "null")
-		.append(',').append(dest != null ? dest.toJSONString() : "null").append(')');
+		getNativeObject().invoke("transform", source, dest);
 		return this;
-	}
-	@Override
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(), this._lon,
-				this._lat) + (_buffer != null ? _buffer.toString() : "");
 	}
 
 	@Override
 	protected String getNativeClass() {
-		// TODO Auto-generated method stub
 		return "OpenLayers.LonLat";
+	}
+
+	@Override
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), this._lon,
+				this._lat);
 	}
 
 }

@@ -19,6 +19,9 @@ package org.zkoss.openlayers.strategy;
 import java.util.Map;
 
 import org.zkoss.openlayers.OLWidget;
+import org.zkoss.openlayers.util.Function;
+import static org.zkoss.openlayers.util.Helper.mergeMap;
+import static org.zkoss.openlayers.util.Helper.pair;
 
 /**
  * @author jumperchen
@@ -35,9 +38,8 @@ public abstract class Strategy extends OLWidget {
 		return _options;
 	}
 
-	public String toJSONString() {
-		return toJSONFun(getNativeClass(),
-				mergeMap(getOptions(), "uuid", getUuid()));
+	protected Function newNativeObject() {
+		return new Function(getNativeClass(), mergeMap(getOptions(),
+					pair("uuid", getUuid())));
 	}
-
 }
