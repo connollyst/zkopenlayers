@@ -31,18 +31,20 @@ public class Icon extends OLBase {
 		_size = size;
 		_offset = offset;
 	}
-	/**
-	 * Returns a new Icon
-	 */
-	public Icon clone() {
-		return new Icon(_url, _size, _offset);
-	}
 	
 	public void setOpacity(double opacity) {
 		getNativeObject().invoke("setOpacity", opacity);
     }
 
-
+	@Override
+	public Object clone() {
+		Icon clone = (Icon) super.clone();
+		if (clone._offset != null)
+			clone._offset = (Pixel) _offset.clone();
+		if (clone._size != null)
+			clone._size = (Size) _size.clone();
+		return clone;
+	}
 	@Override
 	protected Function newNativeObject() {
 		return new Function(getNativeClass(), _url, _size, _offset);

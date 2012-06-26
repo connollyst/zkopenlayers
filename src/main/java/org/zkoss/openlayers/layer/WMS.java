@@ -13,7 +13,7 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
 
 {{IS_RIGHT
 }}IS_RIGHT
-*/
+ */
 package org.zkoss.openlayers.layer;
 
 import java.util.HashMap;
@@ -24,32 +24,42 @@ import org.zkoss.openlayers.util.Helper;
 
 /**
  * @author jumperchen
- *
+ * 
  */
 public class WMS extends Layer {
 	private String _url;
-	public WMS(String name, String url, Map options) {
+
+	private Map _params;
+
+	public WMS(String name, String url, Map params, Map options) {
 		super(name, options);
 		_url = url;
+		_params = params;
+	}
+
+	public WMS(String name, String url, Map params) {
+		this(name, url, params, null);
 	}
 
 	public String getURL() {
 		return _url;
 	}
+
 	@Override
 	protected String getNativeClass() {
 		return "OpenLayers.Layer.WMS";
 	}
-	
+
 	public void mergeNewParams(Map params) {
-		if (_options == null)
-			_options = new HashMap();
-		_options.putAll(params);
+		if (_params == null)
+			_params = new HashMap();
+		_params.putAll(params);
 		clientUpdate("mergeNewParams", params);
 	}
+
 	@Override
 	protected Function newNativeObject() {
-		return new Function(getNativeClass(), getName(), getURL(),
+		return new Function(getNativeClass(), getName(), getURL(), _params,
 				getOptions(), Helper.toMap(Helper.pair("uuid", getUuid())));
 	}
 }

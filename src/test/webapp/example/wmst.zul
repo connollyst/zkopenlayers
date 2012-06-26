@@ -10,7 +10,7 @@
 		<textbox id="hour" value="13"/>:
 		<textbox id="minute" value="00"/>:00
 		</hlayout>
-		<openlayers id="olComp" vflex="1" hflex="1"/>
+		<openlayers id="map" vflex="1" hflex="1"/>
 		</vlayout>
 	</window>
 </zk>

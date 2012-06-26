@@ -42,12 +42,12 @@ import org.zkoss.zul.Window;
 public class CanvasComposer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	@SuppressWarnings("unchecked")
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.setOptions(toMap(
+		map.setOptions(toMap(
 				pair("projection", new Projection("EPSG:900913")),
 				pair("displayProjection", new Projection("EPSG:4326")),
 				pair("units", "m"),
@@ -55,7 +55,7 @@ public class CanvasComposer extends SelectorComposer<Window> {
 				pair("maxExtent", new Bounds(-20037508, -20037508, 20037508,
 						20037508))));
 
-		olComp.addLayer(new Google("Google Layer", toMap(pair(
+		map.addLayer(new Google("Google Layer", toMap(pair(
 				"sphericalMercator", true))));
 
 		// prepare to style the data
@@ -77,7 +77,7 @@ public class CanvasComposer extends SelectorComposer<Window> {
 		styleMap.addUniqueValueRules("default", "STATE_FIPS", fips, null);
 
 		// create a vector layer using the canvas renderer (where available)
-		olComp.addLayer(new Vector(
+		map.addLayer(new Vector(
 				"States",
 				toMap(pair("strategies", new Object[] { new BBOX() }),
 					pair("protocol",
@@ -93,9 +93,9 @@ public class CanvasComposer extends SelectorComposer<Window> {
 							new String[] { "Canvas", "SVG", "VML" }))));
 
 		// if you want to use Geographic coords, transform to ESPG:900913
-		olComp.zoomToExtent(new Bounds(-73.839111, 40.287907, -68.214111,
-				44.441624).transform(olComp.getDisplayProjection(),
-				olComp.getProjection()), false);
+		map.zoomToExtent(new Bounds(-73.839111, 40.287907, -68.214111,
+				44.441624).transform(map.getDisplayProjection(),
+				map.getProjection()), false);
 
 	}
 }

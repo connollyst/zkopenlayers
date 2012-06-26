@@ -69,7 +69,7 @@ public class Markers extends Layer {
 			for (Marker m : _markers)
 				fun.invoke("addMarker", m);
 		}
-		return fun.toJSONString();
+		return fun.toJSONString(_map);
 	}
 	@Override
 	public void onMapAttached(Openlayers newMap, Openlayers oldMap) {

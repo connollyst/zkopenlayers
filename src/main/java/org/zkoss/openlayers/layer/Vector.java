@@ -31,6 +31,9 @@ import org.zkoss.openlayers.util.Function;
 public class Vector extends Layer {
 	private List<Feature> _features;
 
+	public Vector(String name) {
+		this(name, null);
+	}
 	public Vector(String name, Map options) {
 		super(name, options);
 		init();
@@ -55,6 +58,10 @@ public class Vector extends Layer {
 			_map.invalidate();
 		}
 
+	}
+	
+	public void drawFeature(org.zkoss.openlayers.feature.Vector feature) {
+		clientUpdate("drawFeature", feature);
 	}
 
 	public void removeFeatures(List<Feature> features) {
@@ -87,7 +94,7 @@ public class Vector extends Layer {
 		if (!_features.isEmpty()) {
 			fun.invoke("addFeatures", _features);
 		}
-		return fun.toJSONString();
+		return fun.toJSONString(_map);
 	}
 
 	@Override

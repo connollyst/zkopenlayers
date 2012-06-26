@@ -16,8 +16,13 @@ Copyright (C) 2012 Potix Corporation. All Rights Reserved.
  */
 package org.zkoss.openlayers;
 
+import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.zkoss.json.JSONAware;
+import org.zkoss.json.JSONValue;
 import org.zkoss.openlayers.util.Function;
+import org.zkoss.zk.ui.sys.DesktopCtrl;
 
 /**
  * @author jumperchen
@@ -27,11 +32,26 @@ public abstract class OLWidget implements JSONAware {
 	protected Openlayers _map;
 
 	private String _uuid;
+
 	private Function _native;
 
 	private static final String ANONYMOUS_ID = "z__ol";
 
 	private static volatile int _anonymousId;
+
+	private static volatile char[] _prefix;
+
+	private static final ArrayList<String> _chars;
+
+	private static ReentrantLock _lock = new ReentrantLock();
+
+	static {
+		_chars = new ArrayList<String>(52);
+		for (char c = 'a'; c <= 'z'; c++)
+			_chars.add(Character.toString(c));
+		for (char c = 'A'; c <= 'Z'; c++)
+			_chars.add(Character.toString(c));
+	}
 
 	protected void clientUpdate(String attr, Object... args) {
 		if (_map != null)
@@ -76,24 +96,50 @@ public abstract class OLWidget implements JSONAware {
 
 	public String getUuid() {
 		if (_uuid == null) {
-			_uuid = getNextUuid();
+			_uuid = _map != null ? ((DesktopCtrl)_map.getDesktop()).getNextUuid(_map)
+					: getNextUuid();
 		}
 		return _uuid;
 	}
 	
-	protected String getNextUuid() {
-		String uuid = ANONYMOUS_ID + _anonymousId++;
-		if (_anonymousId == Integer.MAX_VALUE) {
-			_anonymousId = 0;
+	protected static String getNextUuid() {
+		_lock.lock();
+
+		String uuid = null;
+		try {
+			uuid = ANONYMOUS_ID
+					+ (_prefix != null ? String.valueOf(_prefix) : "")
+					+ _anonymousId++;
+			if (_anonymousId == Integer.MAX_VALUE) {
+				_anonymousId = 0;
+				if (_prefix == null)
+					_prefix = new char[] { _chars.get(0).charAt(0) };
+				else {
+					int len = _prefix.length;
+					char c = _prefix[len - 1];
+					if (c == _chars.get(_chars.size() - 1).charAt(0)) {
+						char[] _oldPre = _prefix;
+						_prefix = new char[len + 1];
+						System.arraycopy(_oldPre, 0, _prefix, 0, len);
+						_prefix[len] = _chars.get(0).charAt(0);
+					} else _prefix[len - 1] = _chars
+							.get(_chars.indexOf(Character
+									.toString(_prefix[len - 1]))+1).charAt(0);
+				}
+			}
+		} finally {
+			_lock.unlock();
 		}
 		return uuid;
 	}
-	
+
 	protected abstract String getNativeClass();
-	
+
 	/**
-	 * Returns the native Javascript Object, which is according with this OLWidget.
-	 * <p>Note: it will return the same native object when invoked multi-times.
+	 * Returns the native Javascript Object, which is according with this
+	 * OLWidget.
+	 * <p>
+	 * Note: it will return the same native object when invoked multi-times.
 	 */
 	protected Function getNativeObject() {
 		if (_native == null)
@@ -102,10 +148,11 @@ public abstract class OLWidget implements JSONAware {
 	}
 
 	protected abstract Function newNativeObject();
-	
+
 	public String toJSONString() {
-		return getNativeObject().toJSONString();
+		return getNativeObject().toJSONString(_map);
 	}
+
 	/**
 	 * Internal use only.
 	 */
@@ -139,9 +186,43 @@ public abstract class OLWidget implements JSONAware {
 	 */
 	public void onMapDetached(Openlayers map) {
 	}
-	
+
 	@Override
 	public String toString() {
 		return toJSONString();
+	}
+
+	public Function toClientWidget() {
+		if (_map == null)
+			throw new UnsupportedOperationException(
+					"The OLWidget is not attached to Openlayers!");
+		StringBuilder sb = new StringBuilder();
+		return new ReturnFunction(sb
+				.append("(function () {return openlayers._binds['")
+				.append(_map.getUuid()).append("']['").append(getUuid())
+				.append("'];})()").toString());
+
+	}
+
+	private static class ReturnFunction extends Function {
+		public ReturnFunction(String nativeClass) {
+			super(nativeClass);
+		}
+
+		public String toJSONString(Openlayers map) {
+			StringBuilder sb = new StringBuilder(64);
+			sb.append("(function (){ var _a =  ").append(_native).append(';');
+			if (!_methodQueue.isEmpty()) {
+				for (Method method : _methodQueue)
+					sb.append(" _a['")
+							.append(method.getName())
+							.append("'].apply(_a,")
+							.append(JSONValue.toJSONString(method
+									.getArguments())).append(");");
+				_methodQueue.clear();
+			}
+			sb.append("return _a;})()");
+			return sb.toString();
+		}
 	}
 }

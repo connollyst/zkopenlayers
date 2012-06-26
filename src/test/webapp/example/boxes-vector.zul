@@ -1,0 +1,9 @@
+<zk>
+	<window title="Boxes Vector Demo" border="normal"  vflex="1" hflex="1" 
+		apply="ctrl.BoxesVectorComposer">
+		<vlayout  hflex="1">
+		Demonstrate marker and box type annotations on a map.
+		<openlayers id="map" height="330px" width="750px"/>
+		</vlayout>
+	</window>
+</zk>

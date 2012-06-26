@@ -37,28 +37,28 @@ import org.zkoss.zul.Window;
 public class BingTilesComposer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
 		String apiKey = "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf";
 
-		olComp.addLayer(new Bing(toMap(pair("key", apiKey),
+		map.addLayer(new Bing(toMap(pair("key", apiKey),
 				pair("type", "Road"),
 				// custom metadata parameter to request the new map style - only
 				// useful
 				// before May 1st, 2011
 				pair("metadataParams", toMap(pair("mapVersion", "v1"))))));
 
-		olComp.addLayer(new Bing(toMap(pair("key", apiKey),
+		map.addLayer(new Bing(toMap(pair("key", apiKey),
 				pair("type", "Aerial"))));
-		olComp.addLayer(new Bing(toMap(pair("key", apiKey),
+		map.addLayer(new Bing(toMap(pair("key", apiKey),
 				pair("type", "AerialWithLabels"),
 				pair("name", "Bing Aerial With Labels"))));
 
-		olComp.addControl(new LayerSwitcher());
-		olComp.setCenter(new LonLat(-71.147, 42.472).transform(new Projection(
-				"EPSG:4326"), olComp.getProjection()), 11);
+		map.addControl(new LayerSwitcher());
+		map.setCenter(new LonLat(-71.147, 42.472).transform(new Projection(
+				"EPSG:4326"), map.getProjection()), 11);
 
 	}
 }

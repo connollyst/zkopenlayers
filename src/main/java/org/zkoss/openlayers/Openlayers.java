@@ -69,6 +69,10 @@ public class Openlayers extends HtmlBasedComponent {
 	public Collection<Layer> getLayers() {
 		return Collections.unmodifiableCollection(_layers.values());
 	}
+	public void addLayers(Collection<Layer> layers) {
+		for (Layer layer : layers)
+			addLayer(layer);
+	}
 	public void addLayer(Layer layer) {
 		if (layer == null)
 			throw new NullPointerException("Layer cannot be null!");
@@ -77,9 +81,11 @@ public class Openlayers extends HtmlBasedComponent {
 			_baseLayer = layer;
 			invalidate();
 		}
+
+		((OLWidget)layer).setMap(this); // set before #getUuid()
+		
 		if (!_layers.containsKey(layer.getUuid())) {
 			_layers.put(layer.getUuid(), layer);
-			((OLWidget)layer).setMap(this);
 			smartUpdate("layer", layer);
 		}
 	}
@@ -130,11 +136,19 @@ public class Openlayers extends HtmlBasedComponent {
 		return Collections.unmodifiableCollection(_controls.values());
 	}
 	public void addControl(Control control) {
+		if (control == null)
+			throw new NullPointerException("Control cannot be null!");
+		
+		((OLWidget)control).setMap(this);
+		
 		if (!_controls.containsKey(control.getUuid())) {
 			_controls.put(control.getUuid(), control);
-			((OLWidget)control).setMap(this);
 			smartUpdate("control", control);
 		}
+	}
+	public void addControls(Collection<Control> controls) {
+		for (Control control : controls)
+			addControl(control);
 	}
 	public void zoomToExtent(Bounds bounds, boolean closest) {
 		mapEval("zoomToExtent", bounds, closest);
@@ -176,7 +190,7 @@ public class Openlayers extends HtmlBasedComponent {
 		return null;
 	}
 	public void clientUpdate(OLWidget widget, String attr, Object[] value) {
-		smartUpdate("clientUpdate", new Object[] {widget.getUuid(), attr, value});
+		response(new AuSetAttribute(this, "clientUpdate", new Object[] {widget.getUuid(), attr, value}));
 	}
 	// -- ComponentCtrl --//
 	protected void renderProperties(org.zkoss.zk.ui.sys.ContentRenderer renderer)

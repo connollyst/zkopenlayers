@@ -47,7 +47,10 @@ public class StyleMap extends OLBase {
 
 	@Override
 	protected Function newNativeObject() {
-		return new Function(getNativeClass(), _style, _options);
+		if (_style == null)
+			return new Function(getNativeClass(), _options);
+		else
+			return new Function(getNativeClass(), _style, _options);
 	}
 
 	@Override

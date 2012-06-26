@@ -7,7 +7,7 @@
 		<checkbox label="Turn on/off Wheel Zoom" id="ck"/>
 		:<label id="msg" value="Turn off"/>
 		</hlayout>
-		<openlayers style="border: 1px solid blue" id="olComp" width="750px" height="400px"/>
+		<openlayers style="border: 1px solid blue" id="map" width="750px" height="400px"/>
 		</vlayout>
 	</window>
 </zk>

@@ -43,11 +43,11 @@ import org.zkoss.zul.Window;
  */
 public class VectorFeaturesComposer extends SelectorComposer<Window> {
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.addLayer(new WMS("OpenLayers WMS",
+		map.addLayer(new WMS("OpenLayers WMS",
 				"http://vmap0.tiles.osgeo.org/wms/vmap0", toMap(pair("layers",
 						"basic"))));
 		Map layer_style = Vector.getStyle("default");
@@ -123,8 +123,8 @@ public class VectorFeaturesComposer extends SelectorComposer<Window> {
 		ringList.add(linearRing);
 		Vector polygonFeature = new Vector(new Polygon(ringList));
 
-		olComp.addLayer(vectorLayer);
-		olComp.setCenter(new LonLat(point.getX(), point.getY()), 5);
+		map.addLayer(vectorLayer);
+		map.setCenter(new LonLat(point.getX(), point.getY()), 5);
 		vectorLayer.addFeatures(Arrays.asList(pointFeature, pointFeature3,
 				pointFeature2, lineFeature, polygonFeature));
 	}

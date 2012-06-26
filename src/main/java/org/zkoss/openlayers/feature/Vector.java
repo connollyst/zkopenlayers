@@ -34,6 +34,9 @@ public class Vector extends Feature {
 	public Vector(Geometry geometry) {
 		this(geometry, null, null);
 	}
+	public Vector(Geometry geometry, Map data) {
+		this(geometry, data, null);
+	}
 	public Vector(Geometry geometry, Map data, Map style) {
 		super(null, null, data);
 		_geometry = geometry;

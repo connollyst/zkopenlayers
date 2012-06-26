@@ -35,19 +35,19 @@ import org.zkoss.zul.Window;
 public class BingComposer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.addLayer(new VirtualEarth("Shaded", toMap(pair("type",
+		map.addLayer(new VirtualEarth("Shaded", toMap(pair("type",
 				VirtualEarth.Type.SHADED))));
-		olComp.addLayer(new VirtualEarth("Hybrid", toMap(pair("type",
+		map.addLayer(new VirtualEarth("Hybrid", toMap(pair("type",
 				VirtualEarth.Type.HYBRID))));
-		olComp.addLayer(new VirtualEarth("Aerial", toMap(pair("type",
+		map.addLayer(new VirtualEarth("Aerial", toMap(pair("type",
 				VirtualEarth.Type.AERIAL))));
 
-		olComp.addControl(new LayerSwitcher());
-		olComp.setCenter(new LonLat(-110, 45), 3, false, false);
+		map.addControl(new LayerSwitcher());
+		map.setCenter(new LonLat(-110, 45), 3, false, false);
 
 	}
 }

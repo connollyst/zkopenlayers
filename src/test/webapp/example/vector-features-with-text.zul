@@ -1,0 +1,9 @@
+<zk>
+	<window title="Labeled Features Demo" border="normal"  vflex="1" hflex="1" 
+		apply="ctrl.VectorFeaturesWithTextComposer">
+		<vlayout  hflex="1">
+		This example shows drawing simple vector features with a label.
+		<openlayers id="map" height="330px" width="750px"/>
+		</vlayout>
+	</window>
+</zk>

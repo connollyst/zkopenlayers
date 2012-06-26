@@ -33,15 +33,15 @@ import static org.zkoss.openlayers.util.Helper.toMap;
 public class GoogleComposer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.addLayer(new Google("Google Streets",  toMap(pair("type", Google.Type.NORMAL))));
-		olComp.addLayer(new Google("Google Satellite", toMap(pair("numZoomLevels", 20))));
-		olComp.addLayer(new Google("Google Hybrid", toMap(pair("type", Google.Type.HYBRID), pair("numZoomLevels", 20))));
-		olComp.addLayer(new Google("Google Physical", toMap(pair("type", Google.Type.SATELLITE), pair("numZoomLevels", 22))));
-		olComp.addControl(new LayerSwitcher());
-		olComp.setCenter(new LonLat(10.2, 48.9), 5, false, false);
+		map.addLayer(new Google("Google Streets",  toMap(pair("type", Google.Type.NORMAL))));
+		map.addLayer(new Google("Google Satellite", toMap(pair("numZoomLevels", 20))));
+		map.addLayer(new Google("Google Hybrid", toMap(pair("type", Google.Type.HYBRID), pair("numZoomLevels", 20))));
+		map.addLayer(new Google("Google Physical", toMap(pair("type", Google.Type.SATELLITE), pair("numZoomLevels", 22))));
+		map.addControl(new LayerSwitcher());
+		map.setCenter(new LonLat(10.2, 48.9), 5, false, false);
 	}
 }

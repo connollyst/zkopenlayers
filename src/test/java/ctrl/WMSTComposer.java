@@ -39,7 +39,7 @@ public class WMSTComposer extends SelectorComposer<Window> {
 
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	@Wire
 	private Textbox year;
@@ -59,11 +59,11 @@ public class WMSTComposer extends SelectorComposer<Window> {
 	private WMS ia_wms;
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.addLayer(new WMS("OpenLayers WMS",
+		map.addLayer(new WMS("OpenLayers WMS",
 				"http://vmap0.tiles.osgeo.org/wms/vmap0?", toMap(pair("layers",
 						"basic"))));
 
-		olComp.addLayer(new WMS("NASA Global Mosaic",
+		map.addLayer(new WMS("NASA Global Mosaic",
 				"http://t1.hypercube.telascience.org/cgi-bin/landsat7", toMap(
 						pair("layers", "landsat7"), pair("visible", false))));
 		ia_wms = new WMS(
@@ -72,9 +72,9 @@ public class WMSTComposer extends SelectorComposer<Window> {
 				toMap(pair("layers", "nexrad-n0r-wmst"),
 						pair("transparent", true), pair("format", "image/png"),
 						pair("time", "2005-08-29T13:00:00Z")));
-		olComp.addLayer(ia_wms);
-		olComp.addControl(new LayerSwitcher());
-		olComp.zoomToExtent(new Bounds(-100.898437,22.148438,-78.398437,39.726563), false);
+		map.addLayer(ia_wms);
+		map.addControl(new LayerSwitcher());
+		map.zoomToExtent(new Bounds(-100.898437,22.148438,-78.398437,39.726563), false);
 	}
 
 	@Listen("onChange = textbox; onOK = textbox")

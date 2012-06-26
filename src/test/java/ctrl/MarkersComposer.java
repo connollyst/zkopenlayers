@@ -41,33 +41,33 @@ import org.zkoss.zul.Window;
 public class MarkersComposer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.addLayer(new WMS( "OpenLayers WMS", 
+		map.addLayer(new WMS( "OpenLayers WMS", 
              "http://vmap0.tiles.osgeo.org/wms/vmap0", toMap(pair("layers", "basic"))));
              
-        olComp.setCenter(new LonLat(0, 0), 0);
-        olComp.addLayer(new Text("text", toMap(pair("location", "/openlayers/data/textfile.txt"))));
+        map.setCenter(new LonLat(0, 0), 0);
+        map.addLayer(new Text("text", toMap(pair("location", "/openlayers/data/textfile.txt"))));
 
         Markers markers = new Markers("Markers");
-        olComp.addLayer(markers);
+        map.addLayer(markers);
 
         Size size = new Size(21,25);
         Pixel offset = new Pixel(-(size.getWidth()/2), -size.getHeight());
         Icon icon = new Icon("http://www.openlayers.org/dev/img/marker.png",size,offset);
         markers.addMarker(new Marker(new LonLat(0,0),icon));
 
-        Icon halfIcon = icon.clone();
+        Icon halfIcon = (Icon) icon.clone();
          markers.addMarker(new Marker(new LonLat(0,45),halfIcon));
 
-         Marker marker = new Marker(new LonLat(90,10),icon.clone());
+         Marker marker = new Marker(new LonLat(90,10), (Icon)icon.clone());
          marker.setOpacity(0.2);
 //         marker.events.register('mousedown', marker, function(evt) { alert(this.icon.url); OpenLayers.Event.stop(evt); });
          markers.addMarker(marker); 
-         olComp.addControl(new LayerSwitcher());
-         olComp.zoomToMaxExtent();
+         map.addControl(new LayerSwitcher());
+         map.zoomToMaxExtent();
 
          halfIcon.setOpacity(0.5);
 	}

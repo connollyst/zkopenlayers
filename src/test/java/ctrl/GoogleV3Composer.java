@@ -34,16 +34,16 @@ import static org.zkoss.openlayers.util.Helper.toMap;
 public class GoogleV3Composer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.addLayer(new GoogleV3("Google Streets",  toMap(pair("type", GoogleV3.Type.ROADMAP))));
-		olComp.addLayer(new GoogleV3("Google Satellite", toMap(pair("numZoomLevels", 20))));
-		olComp.addLayer(new GoogleV3("Google Hybrid", toMap(pair("type", GoogleV3.Type.HYBRID), pair("numZoomLevels", 20))));
-		olComp.addLayer(new GoogleV3("Google Physical", toMap(pair("type", GoogleV3.Type.SATELLITE), pair("numZoomLevels", 22))));
-		olComp.addControl(new LayerSwitcher());
-		olComp.setCenter(new LonLat(10.2, 48.9).transform(new Projection("EPSG:4326"),
-				olComp.getProjection()), 5, false, false);
+		map.addLayer(new GoogleV3("Google Streets",  toMap(pair("type", GoogleV3.Type.ROADMAP))));
+		map.addLayer(new GoogleV3("Google Satellite", toMap(pair("numZoomLevels", 20))));
+		map.addLayer(new GoogleV3("Google Hybrid", toMap(pair("type", GoogleV3.Type.HYBRID), pair("numZoomLevels", 20))));
+		map.addLayer(new GoogleV3("Google Physical", toMap(pair("type", GoogleV3.Type.SATELLITE), pair("numZoomLevels", 22))));
+		map.addControl(new LayerSwitcher());
+		map.setCenter(new LonLat(10.2, 48.9).transform(new Projection("EPSG:4326"),
+				map.getProjection()), 5, false, false);
 	}
 }

@@ -16,6 +16,9 @@ it will be useful, but WITHOUT ANY WARRANTY.
 (function () {
 OpenLayers.ImgPath = zk.ajaxURI('/web/js/openlayers/ext/img/', {au:true});
 
+// global cache
+openlayers._binds = {};
+
 openlayers.Openlayers = zk.$extends(zul.Widget, {
 	$init: function () {
 		this.$supers('$init', arguments);
@@ -150,6 +153,7 @@ openlayers.Openlayers = zk.$extends(zul.Widget, {
 		zWatch.unlisten({onSize: this});
 		this.map.destroy();
 		this.map = this._controls = this._layers = null;
+		openlayers._binds[this.uuid] = null; // clean the global cache
 		this.$supers(openlayers.Openlayers,'unbind_', arguments);
 	},
 	/// map events

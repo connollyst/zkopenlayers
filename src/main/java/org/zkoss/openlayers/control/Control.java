@@ -33,7 +33,13 @@ public abstract class Control extends OLWidget {
 	public Control(Map options) {
 		_options = options;
 	}
-
+	public void activate() {
+		clientUpdate("activate");
+	}
+	public void deactivate() {
+		clientUpdate("deactivate");
+	}
+	
 	protected Map getOptions() {
 		return _options;
 	}

@@ -37,23 +37,23 @@ import org.zkoss.zul.Window;
 public class WMTSComposer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.setOptions(toMap(
+		map.setOptions(toMap(
 				pair("projection", "EPSG:900913"),
 				pair("units", "m"),
 				pair("maxExtent", new Bounds(-20037508.34, -20037508.34,
 						20037508.34, 20037508.34)),
 				pair("maxResolution", 156543.0339)));
 
-		olComp.addLayer(new OSM());
+		map.addLayer(new OSM());
 		String[] matrixIds = new String[26];
 		for (int i = 0; i < 26; ++i) {
 			matrixIds[i] = "EPSG:900913:" + i;
 		}
-		olComp.addLayer(new WMTS(
+		map.addLayer(new WMTS(
 				toMap(pair("name", "Medford Buildings"),
 						pair("url",
 								"http://v2.suite.opengeo.org/geoserver/gwc/service/wmts/"),
@@ -62,8 +62,8 @@ public class WMTSComposer extends SelectorComposer<Window> {
 						pair("matrixIds", matrixIds),
 						pair("format", "image/png"), pair("style", "_null"),
 						pair("opacity", 0.7), pair("isBaseLayer", false))));
-		olComp.addControl(new LayerSwitcher());
-		olComp.setCenter(new LonLat(-13677832, 5213272), 13, false, false);
+		map.addControl(new LayerSwitcher());
+		map.setCenter(new LonLat(-13677832, 5213272), 13, false, false);
 
 	}
 }

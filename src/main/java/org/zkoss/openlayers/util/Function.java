@@ -21,15 +21,16 @@ import java.util.List;
 
 import org.zkoss.json.JSONAware;
 import org.zkoss.json.JSONValue;
+import org.zkoss.openlayers.Openlayers;
 
 /**
  * A Javascript Object
  * @author jumperchen
  */
 public class Function implements JSONAware {
-	private String _native;
-	private Object[] _arguments;
-	private List<Method> _methodQueue;
+	protected String _native;
+	protected Object[] _arguments;
+	protected List<Method> _methodQueue;
 	
 	public Function(String nativeClass, Object... arguments) {
 		_native = nativeClass;
@@ -40,8 +41,8 @@ public class Function implements JSONAware {
 		_methodQueue.add(new Method(method, arguments));
 		return this;
 	}
-	@Override
-	public String toJSONString() {
+	
+	public String toJSONString(Openlayers map) {
 		StringBuilder sb = new StringBuilder(64);
 		sb.append("(function (){ var _a =  new ").append(_native).append('(');
 		if (_arguments.length > 0) {
@@ -57,13 +58,23 @@ public class Function implements JSONAware {
 						.append(JSONValue.toJSONString(method.getArguments())).append(");");
 			_methodQueue.clear();
 		}
+		if (map != null) {
+			sb.append("var map = openlayers._binds['").append(map.getUuid())
+				.append("']; if (!map) map = openlayers._binds['").append(map.getUuid())
+				.append("'] = {};").append("map[_a.uuid] = _a;");
+		}
 		sb.append("return _a;})()");
 		return sb.toString();
 	}
-	private static class Method {
+	
+	@Override
+	public String toJSONString() {
+		return toJSONString(null);
+	}
+	protected static class Method {
 		private String _name;
 		private Object[] _arguments;
-		private Method(String name, Object...  arguments) {
+		private Method(String name, Object[] arguments) {
 			_name = name;
 			_arguments = arguments;
 		}

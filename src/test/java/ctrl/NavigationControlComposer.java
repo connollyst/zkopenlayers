@@ -39,7 +39,7 @@ import org.zkoss.zul.Window;
 public class NavigationControlComposer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	@Wire
 	private Checkbox ck;
@@ -49,13 +49,13 @@ public class NavigationControlComposer extends SelectorComposer<Window> {
 	private Navigation nav;
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.setOptions(toMap(pair("controls", Collections.EMPTY_LIST)));
-		olComp.addLayer(new WMS("OpenLayers WMS",
+		map.setOptions(toMap(pair("controls", Collections.EMPTY_LIST)));
+		map.addLayer(new WMS("OpenLayers WMS",
 				"http://vmap0.tiles.osgeo.org/wms/vmap0", toMap(pair("layers",
 						"basic"))));
 		nav = new Navigation(toMap(pair("zoomWheelEnabled", false)));
-		olComp.addControl(nav);
-		olComp.zoomToMaxExtent();
+		map.addControl(nav);
+		map.zoomToMaxExtent();
 
 	}
 	@Listen("onCheck = #ck")

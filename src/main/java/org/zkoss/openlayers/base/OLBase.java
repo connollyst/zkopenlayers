@@ -23,13 +23,24 @@ import org.zkoss.openlayers.Openlayers;
  * @author jumperchen
  *
  */
-public abstract class OLBase extends OLWidget {
+public abstract class OLBase extends OLWidget implements Cloneable {
 
 
 	@Override
 	protected void setMap(Openlayers map) {
 		throw new UnsupportedOperationException(
 				"Unsupport setMap() method!");
+	}
+	
+	public Object clone() {
+		OLBase clone = null;
+		try {
+			clone = (OLBase)super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new InternalError();
+		}
+		clone._map = null;
+		return clone;
 	}
 
 }

@@ -2,6 +2,6 @@
 <zk>
 	<window title="Google V2" border="normal"  vflex="1" hflex="1" 
 		apply="ctrl.GoogleComposer">
-		<openlayers id="olComp" vflex="1" hflex="1"/>
+		<openlayers id="map" vflex="1" hflex="1"/>
 	</window>
 </zk>

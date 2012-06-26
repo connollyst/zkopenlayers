@@ -1,0 +1,22 @@
+<zk>
+	<window title="Overview Map Demo" border="normal"  vflex="1" hflex="1" 
+		apply="ctrl.OverviewMapComposer">
+		<vlayout vflex="1" hflex="1">
+		<openlayers id="map1" vflex="1" width="700px"/>
+		<div>
+		The above map has an overview map control that is created with
+        the default options.  Much like a regular map, the map contained by
+        the overview map control defaults to a geographic projection
+		</div>
+		<openlayers id="map2" vflex="1" width="700px"/>
+		<div>
+		The second map has an overview map control that is created with
+        non-default options.  In this case, the mapOptions property of the
+        control has been set to use non-default projection related properties,
+        and the layers property has been set to use a layer different from the main
+        map. In addition, any other properties of the overview map control can be
+        set in this way.
+		</div>
+		</vlayout>
+	</window>
+</zk>

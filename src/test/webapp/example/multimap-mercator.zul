@@ -1,0 +1,6 @@
+<zk>
+	<window title="MultiMap SphericalMercator Demo" border="normal"  vflex="min" hflex="min" 
+		apply="ctrl.MultimapMercatorComposer">
+		<openlayers id="map" width="800px" height="400px"/>
+	</window>
+</zk>

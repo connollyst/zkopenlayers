@@ -1,6 +1,6 @@
 <zk>
 	<window title="Markers Layer Demo" border="normal"
 		apply="ctrl.MarkersComposer" hflex="min">
-		<openlayers id="olComp" width="512px" height="256px" />
+		<openlayers id="map" width="512px" height="256px" />
 	</window>
 </zk>

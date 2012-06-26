@@ -37,16 +37,16 @@ import org.zkoss.zul.Window;
 public class YahooComposer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.addLayer(new Yahoo("Yahoo"));
-		olComp.addLayer(new WMS("OpenLayers WMS",
+		map.addLayer(new Yahoo("Yahoo"));
+		map.addLayer(new WMS("OpenLayers WMS",
 				"http://vmap0.tiles.osgeo.org/wms/vmap0", toMap(pair("layers",
 						"basic"))));
-		olComp.addControl(new LayerSwitcher());
-		olComp.setCenter(new LonLat(23.342453, 120.320154).transform(
+		map.addControl(new LayerSwitcher());
+		map.setCenter(new LonLat(23.342453, 120.320154).transform(
 				new Projection("EPSG:900913"), new Projection("EPSG:4326")), 4,
 				false, false);
 

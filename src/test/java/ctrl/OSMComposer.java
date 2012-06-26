@@ -35,14 +35,14 @@ import org.zkoss.zul.Window;
 public class OSMComposer extends SelectorComposer<Window> {
 
 	@Wire
-	private Openlayers olComp;
+	private Openlayers map;
 
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		olComp.addLayer(new OSM("Simple OSM Map"));
-		olComp.setCenter(new LonLat(-71.147, 42.472).transform(
+		map.addLayer(new OSM("Simple OSM Map"));
+		map.setCenter(new LonLat(-71.147, 42.472).transform(
                 new Projection("EPSG:4326"),
-                olComp.getProjection()), 12, false, false);
+                map.getProjection()), 12, false, false);
 
 	}
 }
