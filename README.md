@@ -5,6 +5,9 @@
 2. In Eclipse IDE, `File`>`Import...`>`Existing Projects into Workspace`
 3. Run with the openlayers project and then you can visit the demo page - __localhost:8080/openlayers/__
 
+##Demo
+[Demo Video](http://www.screencast.com/t/spIib4Mm)
+
 ##Project License
 [GPL 2](https://github.com/jumperchen/openlayers/blob/master/zkdoc/COPYING)
 
