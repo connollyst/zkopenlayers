@@ -29,6 +29,7 @@ import org.zkoss.openlayers.layer.Markers;
 import org.zkoss.openlayers.layer.Text;
 import org.zkoss.openlayers.layer.WMS;
 import org.zkoss.openlayers.marker.Marker;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
@@ -49,7 +50,7 @@ public class MarkersComposer extends SelectorComposer<Window> {
              "http://vmap0.tiles.osgeo.org/wms/vmap0", toMap(pair("layers", "basic"))));
              
         map.setCenter(new LonLat(0, 0), 0);
-        map.addLayer(new Text("text", toMap(pair("location", "/openlayers/data/textfile.txt"))));
+        map.addLayer(new Text("text", toMap(pair("location", Executions.getCurrent().getContextPath() + "/data/textfile.txt"))));
 
         Markers markers = new Markers("Markers");
         map.addLayer(markers);

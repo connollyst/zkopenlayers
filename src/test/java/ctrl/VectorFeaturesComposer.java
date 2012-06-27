@@ -33,6 +33,7 @@ import org.zkoss.openlayers.geometry.LinearRing;
 import org.zkoss.openlayers.geometry.Point;
 import org.zkoss.openlayers.geometry.Polygon;
 import org.zkoss.openlayers.layer.WMS;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
@@ -77,7 +78,7 @@ public class VectorFeaturesComposer extends SelectorComposer<Window> {
 				pair("graphicXOffset", 10),
 				// default is -(style_mark.graphicWidth/2);
 				pair("graphicYOffset", -20),
-				pair("externalGraphic", "/openlayers/img/marker.png"),
+				pair("externalGraphic", Executions.getCurrent().getContextPath() + "/img/marker.png"),
 				// graphicTitle only works in Firefox and Internet Explorer
 				pair("graphicTitle", "this is a test tooltip"));
 
