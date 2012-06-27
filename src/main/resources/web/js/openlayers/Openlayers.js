@@ -80,8 +80,14 @@ openlayers.Openlayers = zk.$extends(zul.Widget, {
 				this.map.setOptions(options);
 		}
 	},
+	getZclass: function () {
+		return this._zclass != null ? this._zclass : "z-openlayers";
+	},
 	getOLWidget: function (uuid) {
 		if (this.map) {
+			var wgts = openlayers._binds[this.uuid];
+			if (wgts && (wgts = wgts[uuid]))
+				return wgts;
 			var w = this.map.getLayersBy("uuid", uuid);
 			if (w.length)
 				return w[0];

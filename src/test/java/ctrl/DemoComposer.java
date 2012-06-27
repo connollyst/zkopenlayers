@@ -53,7 +53,7 @@ public class DemoComposer extends SelectorComposer<Borderlayout> {
 				item.addEventListener("onClick",
 						new org.zkoss.zk.ui.event.EventListener() {
 							public void onEvent(Event event) throws Exception {
-								if ("google.zul".equals(data.getName())
+								if (("google.zul".equals(data.getName()) || "canvas.zul".equals(data.getName()))
 										&& (!"8080".equals(Executions
 												.getCurrent().getServerPort() + "") || !"localhost"
 												.equals(Executions.getCurrent()

@@ -189,6 +189,10 @@ public class Openlayers extends HtmlBasedComponent {
 			return (Projection) _options.get("projection");
 		return null;
 	}
+
+	public String getZclass() {
+		return _zclass == null ? "z-openlayers" : _zclass;
+	}
 	public void clientUpdate(OLWidget widget, String attr, Object[] value) {
 		response(new AuSetAttribute(this, "clientUpdate", new Object[] {widget.getUuid(), attr, value}));
 	}

@@ -20,7 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.zkoss.openlayers.util.Function;
-import org.zkoss.openlayers.util.Helper;
+import static org.zkoss.openlayers.util.Helper.mergeMap;
+import static org.zkoss.openlayers.util.Helper.pair;
 
 /**
  * @author jumperchen
@@ -60,6 +61,6 @@ public class WMS extends Layer {
 	@Override
 	protected Function newNativeObject() {
 		return new Function(getNativeClass(), getName(), getURL(), _params,
-				getOptions(), Helper.toMap(Helper.pair("uuid", getUuid())));
+				mergeMap(getOptions(), pair("uuid", getUuid())));
 	}
 }
