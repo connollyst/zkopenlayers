@@ -7,7 +7,7 @@
 	<properties>
 		<zk.version>6.0.0</zk.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
-		<packname>-1.0-SNAPSHOT-${maven.build.timestamp}</packname>
+		<packname>-1.0.0-SNAPSHOT-${maven.build.timestamp}</packname>
 	</properties>
 	<packaging>jar</packaging>
 	<name>The openlayers library</name>

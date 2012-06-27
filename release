@@ -1,0 +1,19 @@
+#!/bin/bash
+# release
+#
+#{{IS_NOTE
+#	Purpose:
+#		
+#	Description:
+#		
+#	History:
+#		Wed June 27 14:29:09	 2012, Created by jumperchen
+#}}IS_NOTE
+#
+#Copyright (C) 2012 Potix Corporation. All Rights Reserved.
+#
+#{{IS_RIGHT
+#}}IS_RIGHT
+#
+
+mvn clean package ; mvn -f pom-demo.xml package
