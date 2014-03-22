@@ -1,0 +1,8 @@
+<zk xmlns:w="http://www.zkoss.org/2005/zk/client">
+	<window title="Image" border="normal" vflex="1"
+		hflex="1" apply="ctrl.ImageComposer">
+	<vlayout vflex="1">
+		<openlayers style="border: 1px solid blue" id="map"  />
+	</vlayout>
+	</window>
+</zk>
