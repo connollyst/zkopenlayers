@@ -3,7 +3,7 @@
 	Purpose:
 		
 	Description:
-		The Openlayers version is 2.11 - http://openlayers.org/
+		The Openlayers version is 2.13.1 - http://openlayers.org/
 		
 	History:
 		Wed, Jun 20, 2012  9:59:38 AM, Created by jumperchen

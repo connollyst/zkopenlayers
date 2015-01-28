@@ -34,6 +34,7 @@ public class Vector extends Layer {
 	public Vector(String name) {
 		this(name, null);
 	}
+
 	public Vector(String name, Map options) {
 		super(name, options);
 		init();
@@ -59,7 +60,7 @@ public class Vector extends Layer {
 		}
 
 	}
-	
+
 	public void drawFeature(org.zkoss.openlayers.feature.Vector feature) {
 		clientUpdate("drawFeature", feature);
 	}
@@ -81,6 +82,14 @@ public class Vector extends Layer {
 	public void removeFeatures() {
 		for (Feature f : _features)
 			removeFeature(f);
+	}
+
+	public void refresh() {
+		clientUpdate("refresh");
+	}
+
+	public void removeAllFeatures() {
+		clientUpdate("removeAllFeatures");
 	}
 
 	@Override
