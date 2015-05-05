@@ -4,7 +4,7 @@
 
     <groupId>org.zkoss.zk</groupId>
     <artifactId>zkopenlayers</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <name>ZK OpenLayers</name>
@@ -19,7 +19,7 @@
         <developerConnection>
             scm:git:git@github.com:connollyst/zkopenlayers.git
         </developerConnection>
-        <tag>zkopenlayers-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <developers>
