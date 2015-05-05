@@ -74,6 +74,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/ctrl/**</exclude>
+                        <exclude>test/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -82,6 +83,7 @@
                 <artifactId>maven-source-plugin</artifactId>
                 <version>2.3</version>
             </plugin>
+            <!-- Build javadoc -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -92,8 +94,6 @@
                         <configuration>
                             <encoding>UTF-8</encoding>
                             <charset>UTF-8</charset>
-                            <reportOutputDirectory>${project.basedir}/target/javadoc</reportOutputDirectory>
-                            <destDir>openlayers</destDir>
                             <show>protected</show>
                         </configuration>
                         <goals>
@@ -101,6 +101,15 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Release to Maven Central with passphrase -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+                </configuration>
             </plugin>
             <!-- Run test webapp with Jetty -->
             <plugin>
@@ -121,5 +130,39 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- Generate PGP Signatures -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.4</version>
+                        <configuration>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
