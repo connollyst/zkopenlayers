@@ -2,17 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.zkoss.zk</groupId>
     <artifactId>openlayers</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <properties>
-        <zk.version>6.0.0</zk.version>
-        <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
-        <packname>-1.0.0-SNAPSHOT-${maven.build.timestamp}</packname>
-    </properties>
+    <version>1.1.0-SNAPSHOT</version>
+
     <packaging>jar</packaging>
-    <name>The openlayers library</name>
-    <description>The openlayers library</description>
+    <name>ZK OpenLayers</name>
+    <description>ZK wrapper for OpenLayers 2</description>
 
     <licenses>
         <license>
@@ -20,6 +17,10 @@
             <url>https://www.gnu.org/licenses/gpl-2.0.txt</url>
         </license>
     </licenses>
+
+    <properties>
+        <zk.version>6.0.0</zk.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -103,5 +104,5 @@
             </plugin>
         </plugins>
     </build>
-    
+
 </project>
