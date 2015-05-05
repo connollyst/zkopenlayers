@@ -1,18 +1,38 @@
-#This project aims to integrate [OpenLayers](http://openlayers.org/) into [ZK](http://www.zkoss.org/) framework
+# zkopenlayers
+[ZK](https://github.com/zkoss/zk) wrapper for [OpenLayers 2](https://github.com/openlayers/openlayers), an industry
+standard JS library for embedding interactive maps in web applications.
 
-##How to install ZK Openlayers project
-1. Please checkout this repository to a folder named __openlayers__
-2. In Eclipse IDE, `File`>`Import...`>`Existing Projects into Workspace`
-3. Run with the openlayers project and then you can visit the demo page - __localhost:8080/openlayers/__
+This project enables you to create Maps, Layers, and Features in Java or ZUL, with server side event handling and updates.
 
-##ZK Version
-Applicable to ZK 6.0.0 and later.
+## Download
 
-##Demo
+#### Maven
+
+    <dependency>
+    	<groupId>org.zkoss</groupId>
+    	<artifactId>zkopenlayers</artifactId>
+    	<version>1.1.0</version>
+    </dependency>
+
+#### Gradle
+
+    runtime group: 'org.zkoss', name: 'zkopenlayers', version: '1.1.0'
+
+## Demo
+
+A small demo app is included to showcase functionality and use. To run the demo with Maven, start Jetty:
+
+    mvn jetty:run
+
+and navigate to [http://localhost:8080/zkopenlayers/](http://localhost:8080/zkopenlayers/)
+
 [Demo Video](http://www.screencast.com/t/spIib4Mm)
 
-##Project License
-[GPL 2](https://github.com/zkoss/openlayers/blob/master/zkdoc/COPYING)
+## Quick Start
 
-##Download
-[Download](https://github.com/zkoss/openlayers/downloads)
+## ZK Version
+Applicable to ZK 6.0.0 and later.
+
+
+##Project License
+[GNU General Public License (GPL) v2](https://www.gnu.org/licenses/gpl-2.0.txt)
