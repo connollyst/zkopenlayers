@@ -12,6 +12,14 @@
 	<packaging>jar</packaging>
 	<name>The openlayers library</name>
 	<description>The openlayers library</description>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License (GPL) v2</name>
+            <url>https://www.gnu.org/licenses/gpl-2.0.txt</url>
+        </license>
+    </licenses>
+
 	<repositories>
 		<repository>
 			<id>zk repository</id>
