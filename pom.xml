@@ -10,6 +10,35 @@
     <packaging>jar</packaging>
     <name>ZK OpenLayers</name>
     <description>ZK wrapper for OpenLayers 2</description>
+    <url>https://github.com/connollyst/zkopenlayers</url>
+
+    <scm>
+        <url>https://github.com/connollyst/zkopenlayers</url>
+        <connection>
+            scm:git:git://github.com/connollyst/zkopenlayers.git
+        </connection>
+        <developerConnection>
+            scm:git:git@github.com:connollyst/zkopenlayers.git
+        </developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>jumperchen</id>
+            <name>Jumper Chen</name>
+        </developer>
+        <developer>
+            <id>kubakudla</id>
+            <name>Jakub Kudla</name>
+        </developer>
+        <developer>
+            <id>connollyst</id>
+            <name>Sean Connolly</name>
+            <email>connolly.st@gmail.com</email>
+            <url>http://sean.connolly.rocks</url>
+        </developer>
+    </developers>
 
     <licenses>
         <license>
@@ -17,6 +46,23 @@
             <url>https://www.gnu.org/licenses/gpl-2.0.txt</url>
         </license>
     </licenses>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus snapshot repository</name>
+            <url>
+                https://oss.sonatype.org/content/repositories/snapshots
+            </url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus release repository</name>
+            <url>
+                https://oss.sonatype.org/service/local/staging/deploy/maven2
+            </url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <zk.version>6.0.0</zk.version>
