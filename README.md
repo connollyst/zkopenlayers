@@ -11,12 +11,12 @@ This project enables you to create Maps, Layers, and Features in Java or ZUL, wi
     <dependency>
     	<groupId>org.zkoss</groupId>
     	<artifactId>zkopenlayers</artifactId>
-    	<version>1.1.0</version>
+    	<version>1.0.0</version>
     </dependency>
 
 #### Gradle
 
-    runtime group: 'org.zkoss', name: 'zkopenlayers', version: '1.1.0'
+    runtime group: 'org.zkoss', name: 'zkopenlayers', version: '1.0.0'
 
 ## Demo
 
